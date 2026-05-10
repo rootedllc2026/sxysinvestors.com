@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  // Prevent anchor-jump on page load
+  if (window.location.hash) {
+    history.replaceState(null, null, ' ');
+  }
+  window.addEventListener('load', function() {
+    setTimeout(function() { window.scrollTo(0, 0); }, 50);
+  });
+</script>
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Get Started | SXY's Corporate Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+
+<style>
+  :root {
+    --teal-deep: #0d7a8c;
+    --teal-mid: #1ab8cc;
+    --teal-light: #5bcfdf;
+    --teal-pale: #0a2a2e;
+    --teal-mist: #071f22;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #1a1408;
+    --white: #ffffff;
+    --charcoal: #0a0a0a;
+    --text-body: #e8e8e8;
+    --text-muted: #a0c4cc;
+    --black-bg: #000000;
+    --black-bg-2: #0a0a0a;
+    --black-card: #111111;
+    --black-card-2: #161616;
+  }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background: #000000;color:var(--body);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1rem 3rem;background: rgba(0,0,0,0.92);border-bottom: 1px solid rgba(201,168,76,0.3);box-shadow: 0 2px 20px rgba(0,0,0,0.5);}
+.nav-logo{display:flex;align-items:center;gap:0.7rem;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{text-decoration:none;color:var(--body);font-size:0.85rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover{color:var(--teal-mid);}
+.nav-cta{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--charcoal)!important;padding:0.5rem 1.3rem;border-radius:30px;font-weight:700!important;}
+@media(max-width:768px){nav{padding:1rem 1.2rem;}.nav-links{display:none;}}
+
+/* HERO */
+.hero{padding:7rem 2rem 4rem;background: linear-gradient(160deg, #071520 0%, #0a1a20 40%, #071820 70%, #050f15 100%);text-align:center;}
+.eyebrow{display:inline-block;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:30px;padding:0.35rem 1rem;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color: var(--gold-light);margin-bottom:1rem;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--teal);margin-bottom:0.8rem;line-height:1.1;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--muted);max-width:580px;margin:0 auto 1.5rem;line-height:1.7;}
+
+/* HOW IT WORKS */
+.how-it-works{background: #000000;padding:3.5rem 2rem;text-align:center;border-bottom:1px solid rgba(10,92,107,0.08);}
+.steps{display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;max-width:900px;margin:2rem auto 0;}
+.step{flex:1;min-width:180px;max-width:200px;}
+.step-num{width:44px;height:44px;background:linear-gradient(135deg,var(--teal),var(--teal-mid));color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;margin:0 auto 0.8rem;}
+.step h4{font-size:0.9rem;font-weight:700;color:var(--teal);margin-bottom:0.3rem;}
+.step p{font-size:0.82rem;color:var(--muted);line-height:1.5;}
+
+/* SECTION LAYOUT */
+.services-wrap{max-width:1100px;margin:0 auto;padding:4rem 2rem;}
+.section-head{margin-bottom:2.5rem;}
+.section-label{font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;}
+.section-title{font-family:'Playfair Display',serif;font-size:2rem;color:var(--teal);margin-bottom:0.5rem;}
+.section-desc{color:var(--muted);font-size:0.95rem;line-height:1.6;max-width:680px;}
+
+/* SERVICE CARDS */
+.service-card {background: #111111;border-radius:24px;border:1px solid rgba(10,92,107,0.1);box-shadow:0 4px 20px rgba(10,92,107,0.07);margin-bottom:2rem;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;}
+.service-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(10,92,107,0.12);}
+.card-inner{display:grid;grid-template-columns:1fr auto;gap:0;align-items:stretch;}
+.card-content{padding:2rem 2rem 2rem 2rem;}
+.card-price-col{background:linear-gradient(160deg,var(--teal),#0d7a8a);padding:2rem 1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-width:180px;}
+.card-price-col .price{font-family:'Playfair Display',serif;font-size:1.8rem;color:white;font-weight:700;line-height:1;}
+.card-price-col .price-label{font-size:0.72rem;color:rgba(255,255,255,0.75);margin-top:0.3rem;text-transform:uppercase;letter-spacing:0.08em;}
+.card-price-col .price-note{font-size:0.7rem;color:rgba(255,255,255,0.6);margin-top:0.4rem;line-height:1.4;max-width:120px;}
+.service-tag{display:inline-block;background:rgba(201,168,76,0.12);color: var(--gold-light);border-radius:10px;padding:0.2rem 0.7rem;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.7rem;}
+.service-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--teal);margin-bottom:0.6rem;}
+.service-desc{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--muted);line-height:1.7;margin-bottom:1rem;}
+.service-features{list-style:none;margin-bottom:1.2rem;}
+.service-features li{font-size:0.85rem;color:var(--body);padding:0.25rem 0;display:flex;align-items:flex-start;gap:0.5rem;}
+.service-features li::before{content:'✓';color:var(--teal-mid);font-weight:700;flex-shrink:0;}
+.btn-book{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold-light));color: var(--white);padding:0.7rem 1.6rem;border-radius:30px;font-weight:700;font-size:0.85rem;text-decoration:none;box-shadow:0 4px 14px rgba(201,168,76,0.3);transition:transform 0.2s;}
+.btn-book:hover{transform:translateY(-2px);}
+.retainer-note{display:inline-block;background:rgba(10,92,107,0.08);border:1px solid rgba(10,92,107,0.15);border-radius:10px;padding:0.4rem 0.9rem;font-size:0.75rem;color:var(--teal);font-weight:600;margin-top:0.5rem;}
+
+/* INTAKE FORM */
+.intake-form{background:linear-gradient(135deg,var(--teal),#0d7a8a);border-radius:20px;padding:2rem;margin-top:1.2rem;}
+.intake-form h4{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:0.3rem;}
+.intake-form p{font-size:0.8rem;color:rgba(255,255,255,0.75);margin-bottom:1.2rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:0.8rem;}
+.form-full{grid-column:1/-1;}
+.fg{display:flex;flex-direction:column;gap:0.25rem;}
+.fg label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.7);}
+.fg input,.fg textarea,.fg select{background: rgba(0,0,0,0.1);border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;padding:0.6rem 0.8rem;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:white;outline:none;width:100%;}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,0.35);}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--gold-light);}
+.fg select option{background:#0a5c6b;}
+.fg textarea{min-height:80px;resize:vertical;}
+.btn-submit{background:linear-gradient(135deg,var(--gold),var(--gold-light));color: var(--white);border:none;border-radius:30px;padding:0.75rem 2rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;margin-top:0.5rem;width:100%;}
+.form-success{display:none;background: rgba(0,0,0,0.15);border-radius:12px;padding:1rem;text-align:center;color:white;font-weight:600;margin-top:0.8rem;}
+
+/* DIVIDER */
+.section-divider{border:none;border-top:2px solid rgba(10,92,107,0.08);margin:3rem 0;}
+
+@media(max-width:768px){
+  .card-inner{grid-template-columns:1fr;}
+  .card-price-col{min-width:unset;padding:1.5rem;}
+  .form-row{grid-template-columns:1fr;}
+  .services-wrap{padding:3rem 1.2rem;}
+}
+
+  /* === BLACK THEME: Alternating heading colors === */
+  h1 { color: var(--teal-mid) !important; }
+  h2 { color: var(--gold) !important; }
+  h3 { color: #ffffff !important; }
+  h4 { color: var(--teal-light) !important; }
+  h5 { color: var(--gold-light) !important; }
+  h6 { color: #ffffff !important; }
+  
+  /* Section headings - alternate teal/gold/white */
+  .section-title { color: var(--gold) !important; }
+  .section-subtitle { color: var(--teal-light) !important; }
+  .hero-title { color: var(--teal-mid) !important; }
+  .hero-subtitle { color: var(--gold-light) !important; }
+  
+  /* Body text */
+  p { color: #d0d0d0; }
+  .text-muted, .muted { color: var(--teal-light) !important; }
+  
+  /* Cards - dark theme */
+  .stat-card, .service-card, .feature-card, .testimonial-card,
+  .why-card, .value-card, .tier-card, .plan-card, .step-card,
+  .faq-item, .benefit-card, .info-card, .card { 
+    background: #111111 !important; 
+    border-color: rgba(13,122,140,0.25) !important;
+  }
+  
+  /* Sections */
+  section, .section, .stats-section, .features-section,
+  .about-section, .testimonials-section, .faq-section,
+  .cta-section, .pricing-section, .process-section {
+    background: #000000 !important;
+  }
+  
+  /* Alternating section backgrounds */
+  section:nth-child(even) { background: #080808 !important; }
+  section:nth-child(odd) { background: #000000 !important; }
+  
+  /* Nav */
+  nav { background: rgba(0,0,0,0.95) !important; }
+  nav a { color: #d0d0d0 !important; }
+  nav a:hover { color: var(--gold) !important; }
+  .nav-logo { color: var(--teal-mid) !important; }
+  .nav-logo span { color: var(--gold) !important; }
+  
+  /* Inputs */
+  input, textarea, select {
+    background: #1a1a1a !important;
+    color: #ffffff !important;
+    border-color: rgba(13,122,140,0.4) !important;
+  }
+  input::placeholder, textarea::placeholder { color: #606060 !important; }
+  
+  /* Footer */
+  footer { background: #050505 !important; color: #a0a0a0 !important; }
+  footer a { color: var(--teal-light) !important; }
+  footer h3, footer h4 { color: var(--gold) !important; }
+  
+  /* Labels and small text */
+  label { color: var(--teal-light) !important; }
+  .badge, .tag { background: rgba(13,122,140,0.2) !important; color: var(--teal-light) !important; }
+  
+  /* Dividers */
+  hr { border-color: rgba(201,168,76,0.2) !important; }
+  
+  /* List items */
+  li { color: #d0d0d0; }
+  
+  /* Links */
+  a { color: var(--teal-mid); }
+  a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img src="logo.png" alt="SXY's Corporate Club" style="height:52px;width:auto;">
+    <span style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--teal);">SXY's <span style="color:var(--gold);">Corporate</span> Club</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#janay">Meet Janay</a></li>
+    <li><a href="marketing-services.html">Marketing</a></li>
+    <li><a href="index.html#investor-bites">Economy Bites</a></li>
+    <li><a href="https://sxyscorporateclub.com/login" class="nav-portal" style="color:#2ab8cc;font-weight:600;">Member Portal →</a></li><li><a href="index.html#book" class="nav-cta">Book Free Call</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow">🚀 Work With Janay</div>
+  <h1>Let's <em>Get Started</em></h1>
+  <p>Choose the service that fits your business needs. Every engagement starts with a free 30-minute discovery call.</p>
+  <a href="https://calendly.com/rootedllc2026/30min" target="_blank" style="display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--charcoal);padding:0.85rem 2rem;border-radius:40px;font-weight:700;font-size:0.95rem;text-decoration:none;box-shadow:0 6px 20px rgba(201,168,76,0.35);margin-top:0.5rem;">📅 Book Your Free Discovery Call</a>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="how-it-works">
+  <div class="eyebrow">The Process</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--teal);margin-top:0.5rem;">How It Works</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>Book Free Call</h4>
+      <p>30-minute discovery call to understand your needs and goals.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>Submit Intake Form</h4>
+      <p>Fill out the intake form below your chosen service so Janay can prepare.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>Get Your Plan</h4>
+      <p>Receive a customized strategy and roadmap for your business.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h4>Execute & Grow</h4>
+      <p>Work with Janay one-on-one to implement and track progress.</p>
+    </div>
+  </div>
+</div>
+
+<div class="services-wrap">
+
+  <!-- ══════════════════════════════════ -->
+  <!-- CONSULTING SERVICES               -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-head">
+    <div class="section-label">Consulting Services</div>
+    <div class="section-title">One-on-One Business Consulting</div>
+    <p class="section-desc">Expert guidance tailored to your business stage and goals. All packages include a free 30-minute discovery call before you commit.</p>
+  </div>
+
+  <!-- ENTITY FORMATION -->
+  <div class="service-card" id="entity">
+    <div class="card-inner">
+      <div class="card-content">
+        <span class="service-tag">Entity Formation</span>
+        <div class="service-title">Entity Formation & Business Strategy</div>
+        <p class="service-desc">From choosing the right business structure to filing your LLC or corporation, Janay guides you through every step to protect your assets and set your business up for success.</p>
+        <ul class="service-features">
+          <li>Business structure consultation (LLC, S-Corp, C-Corp)</li>
+          <li>State filing guidance & documentation review</li>
+          <li>EIN registration and operating agreement overview</li>
+          <li>Business strategy roadmap session</li>
+        </ul>
+        <a href="https://calendly.com/rootedllc2026/30min" target="_blank" class="btn-book">📅 Book Discovery Call</a>
+
+        <!-- INTAKE FORM -->
+        <div class="intake-form" style="margin-top:1.5rem;">
+          <h4>📋 Entity Formation Intake</h4>
+          <p>Submit your details so Janay can prepare for your session.</p>
+          <form onsubmit="submitIntake(event, 'entity-form', 'Entity Formation & Business Strategy')">
+            <div class="form-row">
+              <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Jane" required/></div>
+              <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Smith" required/></div>
+              <div class="fg"><label>Email *</label><input type="email" name="email" placeholder="jane@yourbusiness.com" required/></div>
+              <div class="fg"><label>Phone</label><input type="tel" name="phone" placeholder="(215) 555-0100"/></div>
+              <div class="fg form-full"><label>Business Name (if existing)</label><input type="text" name="businessName" placeholder="Your Business LLC"/></div>
+              <div class="fg form-full"><label>What type of entity are you considering?</label>
+                <select name="entityType">
+                  <option>LLC</option><option>S-Corporation</option><option>C-Corporation</option><option>Sole Proprietorship</option><option>Not sure yet</option>
+                </select>
+              </div>
+              <div class="fg form-full"><label>Tell us about your business goals *</label><textarea name="goals" placeholder="Describe your business idea, current stage, and what you hope to achieve..." required></textarea></div>
+            </div>
+            <button type="submit" class="btn-submit">Submit Intake Form ✨</button>
+            <div class="form-success" id="entity-form-success">✅ Received! Janay will review before your call.</div>
+          </form>
+        </div>
+      </div>
+      <div class="card-price-col">
+        <div class="price">$300</div>
+        <div class="price-label">Flat Fee</div>
+        <div class="price-note">One-time payment. Includes full consultation session.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI INTEGRATION -->
+  <div class="service-card" id="ai">
+    <div class="card-inner">
+      <div class="card-content">
+        <span class="service-tag">AI Integration</span>
+        <div class="service-title">AI Integration Consulting</div>
+        <p class="service-desc">Discover how artificial intelligence can streamline your business operations. Each session covers one AI tool in depth — from practical demos to full team onboarding.</p>
+        <ul class="service-features">
+          <li>1-on-1 session with business owner or manager to explain the tool and its benefits</li>
+          <li>Group call with your team to teach integration and workflow</li>
+          <li>Custom implementation plan for your business</li>
+          <li>$400 per tool — bundle multiple tools for a custom quote</li>
+        </ul>
+        <a href="https://calendly.com/rootedllc2026/30min" target="_blank" class="btn-book">📅 Book Discovery Call</a>
+
+        <div class="intake-form" style="margin-top:1.5rem;">
+          <h4>📋 AI Integration Intake</h4>
+          <p>Tell Janay which tools you're interested in exploring.</p>
+          <form onsubmit="submitIntake(event, 'ai-form', 'AI Integration Consulting')">
+            <div class="form-row">
+              <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Jane" required/></div>
+              <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Smith" required/></div>
+              <div class="fg"><label>Email *</label><input type="email" name="email" placeholder="jane@yourbusiness.com" required/></div>
+              <div class="fg"><label>Business Name</label><input type="text" name="businessName" placeholder="Your Business LLC"/></div>
+              <div class="fg"><label>Team Size</label>
+                <select name="teamSize">
+                  <option>Just me</option><option>2-5 people</option><option>6-15 people</option><option>16-50 people</option><option>50+ people</option>
+                </select>
+              </div>
+              <div class="fg"><label>Number of AI Tools</label>
+                <select name="numTools">
+                  <option>1 tool ($400)</option><option>2 tools ($800)</option><option>3 tools ($1,200)</option><option>4+ tools (custom quote)</option>
+                </select>
+              </div>
+              <div class="fg form-full"><label>Which AI tools are you interested in? *</label><textarea name="tools" placeholder="e.g. ChatGPT for customer service, AI scheduling tools, content creation tools..." required></textarea></div>
+              <div class="fg form-full"><label>What business problems are you trying to solve?</label><textarea name="problems" placeholder="Describe the challenges you want AI to help with..."></textarea></div>
+            </div>
+            <button type="submit" class="btn-submit">Submit Intake Form ✨</button>
+            <div class="form-success" id="ai-form-success">✅ Received! Janay will review before your call.</div>
+          </form>
+        </div>
+      </div>
+      <div class="card-price-col">
+        <div class="price">$400</div>
+        <div class="price-label">Per Tool</div>
+        <div class="price-note">Includes 1-on-1 + team group session per tool.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUSINESS MARKET ANALYSIS -->
+  <div class="service-card" id="market">
+    <div class="card-inner">
+      <div class="card-content">
+        <span class="service-tag">Market Analysis</span>
+        <div class="service-title">Business Market Analysis</div>
+        <p class="service-desc">Understand your market landscape, competitive positioning, and growth opportunities. Janay delivers a comprehensive analysis to guide your next strategic move.</p>
+        <ul class="service-features">
+          <li>Competitive landscape research and analysis</li>
+          <li>Target market identification and sizing</li>
+          <li>Industry trends and opportunity mapping</li>
+          <li>Written analysis report + strategy session</li>
+        </ul>
+        <a href="https://calendly.com/rootedllc2026/30min" target="_blank" class="btn-book">📅 Book Discovery Call</a>
+
+        <div class="intake-form" style="margin-top:1.5rem;">
+          <h4>📋 Market Analysis Intake</h4>
+          <p>Help Janay understand your market and goals.</p>
+          <form onsubmit="submitIntake(event, 'market-form', 'Business Market Analysis')">
+            <div class="form-row">
+              <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Jane" required/></div>
+              <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Smith" required/></div>
+              <div class="fg"><label>Email *</label><input type="email" name="email" placeholder="jane@yourbusiness.com" required/></div>
+              <div class="fg"><label>Business Name *</label><input type="text" name="businessName" placeholder="Your Business LLC" required/></div>
+              <div class="fg form-full"><label>Industry / Niche *</label><input type="text" name="industry" placeholder="e.g. Health & Wellness, Real Estate, E-commerce..." required/></div>
+              <div class="fg form-full"><label>Who are your main competitors?</label><textarea name="competitors" placeholder="List any businesses you consider direct competitors..."></textarea></div>
+              <div class="fg form-full"><label>What specific questions do you want the analysis to answer? *</label><textarea name="questions" placeholder="e.g. Is there room in my market? Who is my ideal customer? How do I price competitively?" required></textarea></div>
+            </div>
+            <button type="submit" class="btn-submit">Submit Intake Form ✨</button>
+            <div class="form-success" id="market-form-success">✅ Received! Janay will review before your call.</div>
+          </form>
+        </div>
+      </div>
+      <div class="card-price-col">
+        <div class="price">$400</div>
+        <div class="price-label">Flat Fee</div>
+        <div class="price-note">Includes full written report and strategy session.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider"/>
+
+  <!-- MONTHLY RETAINERS -->
+  <div class="section-head">
+    <div class="section-label">Monthly Retainers</div>
+    <div class="section-title">Ongoing Support Packages</div>
+    <p class="section-desc">These services are billed monthly until project completion. Pricing may increase based on the complexity of the issue, solution, or team size involved.</p>
+  </div>
+
+  <!-- INSOLVENCY (hidden) -->
+  <div class="service-card" style="display:none;">
+    <div class="card-inner">
+      <div class="card-content">
+        <span class="service-tag">Insolvency</span>
+        <div class="service-title">Insolvency & Restructuring Package</div>
+        <p class="service-desc">Navigating financial distress is stressful — Janay provides plain-language guidance through insolvency, restructuring options, and recovery strategy so you can make informed decisions and protect what you've built.</p>
+        <ul class="service-features">
+          <li>Financial situation assessment and options review</li>
+          <li>Chapter 7, 11, and 13 guidance and education</li>
+          <li>Business restructuring strategy development</li>
+          <li>Monthly check-ins and ongoing advisory support</li>
+          <li>Price may increase based on complexity of case</li>
+        </ul>
+        <span class="retainer-note">📅 Billed monthly until project completion</span><br/>
+        <a href="https://calendly.com/rootedllc2026/30min" target="_blank" class="btn-book" style="margin-top:1rem;">📅 Book Discovery Call</a>
+
+        <div class="intake-form" style="margin-top:1.5rem;">
+          <h4>📋 Insolvency Intake</h4>
+          <p>Share your situation confidentially — all information is kept private.</p>
+          <form onsubmit="submitIntake(event, 'insolvency-form', 'Insolvency & Restructuring')">
+            <div class="form-row">
+              <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Jane" required/></div>
+              <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Smith" required/></div>
+              <div class="fg"><label>Email *</label><input type="email" name="email" placeholder="jane@yourbusiness.com" required/></div>
+              <div class="fg"><label>Phone</label><input type="tel" name="phone" placeholder="(215) 555-0100"/></div>
+              <div class="fg form-full"><label>Business Name</label><input type="text" name="businessName" placeholder="Your Business LLC"/></div>
+              <div class="fg form-full"><label>Describe your current financial situation *</label><textarea name="situation" placeholder="Share as much or as little as you're comfortable with. All information is confidential." required></textarea></div>
+              <div class="fg form-full"><label>What outcome are you hoping for?</label><textarea name="outcome" placeholder="e.g. I want to restructure and keep the business open, or I need to understand my options for closing..."></textarea></div>
+            </div>
+            <button type="submit" class="btn-submit">Submit Intake Form ✨</button>
+            <div class="form-success" id="insolvency-form-success">✅ Received confidentially. Janay will be in touch.</div>
+          </form>
+        </div>
+      </div>
+      <div class="card-price-col">
+        <div class="price">$300</div>
+        <div class="price-label">Per Month</div>
+        <div class="price-note">Price may increase based on complexity of case.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT MANAGEMENT -->
+  <div class="service-card" id="project-mgmt" style="display:none;">
+    <div class="card-inner">
+      <div class="card-content">
+        <span class="service-tag">Project Management</span>
+        <div class="service-title">Project Management Package</div>
+        <p class="service-desc">From launch to completion, Janay keeps your business projects on track — managing timelines, teams, vendors, and deliverables so you can focus on your vision.</p>
+        <ul class="service-features">
+          <li>Project scoping, planning, and milestone setting</li>
+          <li>Team and vendor coordination</li>
+          <li>Progress tracking and weekly reporting</li>
+          <li>Risk identification and mitigation</li>
+          <li>Price may increase based on team size and complexity</li>
+        </ul>
+        <span class="retainer-note">📅 Billed monthly until project completion</span><br/>
+        <a href="https://calendly.com/rootedllc2026/30min" target="_blank" class="btn-book" style="margin-top:1rem;">📅 Book Discovery Call</a>
+
+        <div class="intake-form" style="margin-top:1.5rem;">
+          <h4>📋 Project Management Intake</h4>
+          <p>Tell Janay about your project and team.</p>
+          <form onsubmit="submitIntake(event, 'pm-form', 'Project Management')">
+            <div class="form-row">
+              <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Jane" required/></div>
+              <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Smith" required/></div>
+              <div class="fg"><label>Email *</label><input type="email" name="email" placeholder="jane@yourbusiness.com" required/></div>
+              <div class="fg"><label>Business Name *</label><input type="text" name="businessName" placeholder="Your Business LLC" required/></div>
+              <div class="fg"><label>Project Timeline</label>
+                <select name="timeline">
+                  <option>Under 1 month</option><option>1-3 months</option><option>3-6 months</option><option>6-12 months</option><option>Ongoing</option>
+                </select>
+              </div>
+              <div class="fg"><label>Team Size</label>
+                <select name="teamSize">
+                  <option>Just me</option><option>2-5 people</option><option>6-15 people</option><option>16+ people</option>
+                </select>
+              </div>
+              <div class="fg form-full"><label>Describe your project *</label><textarea name="project" placeholder="What are you trying to accomplish? What does success look like?" required></textarea></div>
+            </div>
+            <button type="submit" class="btn-submit">Submit Intake Form ✨</button>
+            <div class="form-success" id="pm-form-success">✅ Received! Janay will review before your call.</div>
+          </form>
+        </div>
+      </div>
+      <div class="card-price-col">
+        <div class="price">$300</div>
+        <div class="price-label">Per Month</div>
+        <div class="price-note">Price may increase based on team size and project complexity.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- GENERAL STRATEGY SESSION -->
+  <div class="service-card" id="general-strategy">
+    <div class="card-inner">
+      <div class="card-content">
+        <span class="service-tag">General Strategy</span>
+        <div class="service-title">General Strategy Session</div>
+        <p class="service-desc">A focused one-on-one session to tackle your most pressing business challenges — from growth planning and operations to goal-setting and decision-making. Walk away with a clear, actionable path forward.</p>
+        <ul class="service-features">
+          <li>Comprehensive business assessment and challenge mapping</li>
+          <li>Growth strategy and goal-setting framework</li>
+          <li>Operations review and efficiency recommendations</li>
+          <li>Decision-making roadmap and next steps</li>
+          <li>Follow-up action plan delivered within 48 hours</li>
+        </ul>
+        <a href="https://calendly.com/rootedllc2026/30min" target="_blank" class="btn-book">📅 Book Discovery Call</a>
+        <div class="intake-form" style="margin-top:1.5rem;">
+          <h4>📋 General Strategy Intake</h4>
+          <p style="font-size:0.85rem;color:#a0a0a0;margin-bottom:1rem;">Tell us about your biggest business challenge so we can prepare for your session.</p>
+          <form onsubmit="submitIntake(event, 'general-strategy-form', 'General Strategy Session')">
+            <input type="text" name="Business Name" placeholder="Business name" required />
+            <input type="text" name="Your Name" placeholder="Your name" required />
+            <input type="email" name="Email" placeholder="Email address" required />
+            <textarea name="Main Challenge" placeholder="Describe your biggest business challenge or goal right now..." rows="3" required></textarea>
+            <textarea name="What You Need" placeholder="What would a successful outcome look like for you?" rows="2"></textarea>
+            <select name="Business Stage">
+              <option value="">How long have you been in business?</option>
+              <option>Just starting out (under 1 year)</option>
+              <option>1–3 years</option>
+              <option>3–5 years</option>
+              <option>5+ years</option>
+            </select>
+            <button type="submit" class="btn-submit">Submit Intake Form →</button>
+            <div class="form-success" id="general-strategy-form-success">✅ Received! Janay will review before your call.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEDIA STRATEGY SESSION -->
+  <div class="service-card" id="media-strategy">
+    <div class="card-inner">
+      <div class="card-content">
+        <span class="service-tag">Media Strategy</span>
+        <div class="service-title">Media Strategy Session</div>
+        <p class="service-desc">We craft the scripts and frameworks behind your brand's media presence — from commercials and social media content to instructional business videos (SOPs, onboarding, explainers) and special event scripts that tell your story with purpose.</p>
+        <ul class="service-features">
+          <li>Marketing scripts for commercials and promotional content</li>
+          <li>Social media content scripts and posting frameworks</li>
+          <li>Instructional video scripts (SOPs, onboarding, explainers)</li>
+          <li>Special event scripts and presentation outlines</li>
+          <li>Brand voice development and messaging guidelines</li>
+        </ul>
+        <a href="https://calendly.com/rootedllc2026/30min" target="_blank" class="btn-book">📅 Book Discovery Call</a>
+        <div class="intake-form" style="margin-top:1.5rem;">
+          <h4>📋 Media Strategy Intake</h4>
+          <p style="font-size:0.85rem;color:#a0a0a0;margin-bottom:1rem;">Help us understand your media needs so we can craft the right scripts for your brand.</p>
+          <form onsubmit="submitIntake(event, 'media-strategy-form', 'Media Strategy Session')">
+            <input type="text" name="Business Name" placeholder="Business name" required />
+            <input type="text" name="Your Name" placeholder="Your name" required />
+            <input type="email" name="Email" placeholder="Email address" required />
+            <select name="Script Type" required>
+              <option value="">What type of content do you need?</option>
+              <option>Commercial / promotional script</option>
+              <option>Social media content scripts</option>
+              <option>Instructional / SOP video script</option>
+              <option>Onboarding video script</option>
+              <option>Special event script</option>
+              <option>Multiple types</option>
+            </select>
+            <textarea name="Brand Description" placeholder="Describe your brand voice and target audience..." rows="3" required></textarea>
+            <textarea name="Project Details" placeholder="Tell us about the specific project or campaign..." rows="2"></textarea>
+            <button type="submit" class="btn-submit">Submit Intake Form →</button>
+            <div class="form-success" id="media-strategy-form-success">✅ Received! Janay will review before your call.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT MANAGEMENT -->
+  <div class="service-card" id="content">
+    <div class="card-inner">
+      <div class="card-content">
+        <span class="service-tag">Content Management</span>
+        <div class="service-title">Content Management Package</div>
+        <p class="service-desc">Consistent, quality content is the backbone of any modern business. Janay manages your content strategy, production, and publishing so your brand stays visible and relevant.</p>
+        <ul class="service-features">
+          <li>Content strategy development and calendar planning</li>
+          <li>Social media, blog, or email content management</li>
+          <li>Content creation coordination and review</li>
+          <li>Performance tracking and strategy adjustment</li>
+          <li>Price depends on content type and production frequency</li>
+        </ul>
+        <span class="retainer-note">📅 Billed monthly until project completion</span><br/>
+        <a href="https://calendly.com/rootedllc2026/30min" target="_blank" class="btn-book" style="margin-top:1rem;">📅 Book Discovery Call</a>
+
+        <div class="intake-form" style="margin-top:1.5rem;">
+          <h4>📋 Content Management Intake</h4>
+          <p>Help Janay understand your content needs and brand voice.</p>
+          <form onsubmit="submitIntake(event, 'content-form', 'Content Management')">
+            <div class="form-row">
+              <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Jane" required/></div>
+              <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Smith" required/></div>
+              <div class="fg"><label>Email *</label><input type="email" name="email" placeholder="jane@yourbusiness.com" required/></div>
+              <div class="fg"><label>Business Name *</label><input type="text" name="businessName" placeholder="Your Business LLC" required/></div>
+              <div class="fg form-full"><label>What type of content do you need? *</label>
+                <select name="contentType">
+                  <option>Social media (Instagram, Facebook, LinkedIn)</option>
+                  <option>Blog / Article writing</option>
+                  <option>Email newsletter</option>
+                  <option>Video content strategy</option>
+                  <option>Multiple platforms (custom quote)</option>
+                </select>
+              </div>
+              <div class="fg form-full"><label>How often do you need content?</label>
+                <select name="frequency">
+                  <option>Daily</option><option>3-5x per week</option><option>Weekly</option><option>Bi-weekly</option><option>Monthly</option>
+                </select>
+              </div>
+              <div class="fg form-full"><label>Describe your brand voice and audience *</label><textarea name="brand" placeholder="Who is your audience? What tone do you use? Professional, casual, educational?" required></textarea></div>
+            </div>
+            <button type="submit" class="btn-submit">Submit Intake Form ✨</button>
+            <div class="form-success" id="content-form-success">✅ Received! Janay will review before your call.</div>
+          </form>
+        </div>
+      </div>
+      <div class="card-price-col">
+        <div class="price">$300</div>
+        <div class="price-label">Per Month</div>
+        <div class="price-note">Price depends on content type and production frequency.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider"/>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- CLUB SERVICE RETAINERS            -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-head" id="club-retainers">
+    <div class="section-label">Club Service Retainers</div>
+    <div class="section-title">Ongoing Partnership — $300/Month</div>
+    <p class="section-desc">Cancel anytime. These retainers pair monthly strategy with real implementation — tools, processes, and systems that actually get built. Not just advice.</p>
+  </div>
+
+  <!-- ACCOUNT MANAGEMENT RETAINER -->
+  <div class="service-card" id="account-management" style="border-color:rgba(13,122,140,0.5);">
+    <div class="card-inner">
+      <div class="card-content">
+        <span class="service-tag" style="background:rgba(13,122,140,0.2);color:#5bcfdf;">Account Management · Retainer</span>
+        <div class="service-title">Account Management</div>
+        <p class="service-desc">We step in as your dedicated post-sale account manager — keeping clients engaged, successful, and renewing. We design and implement the systems that turn one-time buyers into long-term relationships. Ideal for SaaS, agencies, B2B service firms, professional services, and healthcare practices.</p>
+        <ul class="service-features">
+          <li>Client onboarding workflow design & implementation</li>
+          <li>CRM setup, configuration, and pipeline management</li>
+          <li>Scheduled client check-in cadences & email templates</li>
+          <li>Client health scoring & churn risk monitoring dashboard</li>
+          <li>Renewal & upsell playbook development</li>
+          <li>Monthly client success report delivered to you</li>
+        </ul>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:0.5rem;">Typical Timeline</div>
+          <div style="font-size:0.83rem;color:#a0a0a0;line-height:1.6;">Month 1: Audit & onboarding system build &nbsp;·&nbsp; Month 2: CRM + cadence launch &nbsp;·&nbsp; Month 3+: Ongoing optimization & reporting</div>
+        </div>
+        <span class="retainer-note">📅 $300/month · Cancel anytime</span><br/>
+        <a href="https://calendly.com/rootedllc2026/30min" target="_blank" class="btn-book" style="margin-top:1rem;">📅 Book Free Discovery Call</a>
+
+        <div class="intake-form" style="margin-top:1.5rem;">
+          <h4>📋 Account Management Intake</h4>
+          <p>Help us understand your client base and current retention setup so we can hit the ground running.</p>
+          <form onsubmit="submitIntake(event, 'acct-mgmt-form', 'Account Management Retainer')">
+            <div class="form-row">
+              <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Jane" required/></div>
+              <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Smith" required/></div>
+              <div class="fg"><label>Email *</label><input type="email" name="email" placeholder="jane@yourbusiness.com" required/></div>
+              <div class="fg"><label>Phone</label><input type="tel" name="phone" placeholder="(215) 555-0100"/></div>
+              <div class="fg form-full"><label>Business Name *</label><input type="text" name="businessName" placeholder="Your Business LLC" required/></div>
+              <div class="fg form-full"><label>What industry / niche is your business in? *</label>
+                <select name="industry" required>
+                  <option value="">Select your industry...</option>
+                  <option>SaaS / Software</option>
+                  <option>Marketing / Advertising Agency</option>
+                  <option>Professional Services (Law, Accounting, Consulting)</option>
+                  <option>Healthcare / Medical Practice</option>
+                  <option>B2B Service Company</option>
+                  <option>E-Commerce</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="fg form-full"><label>How many active clients do you currently manage?</label>
+                <select name="clientCount">
+                  <option>Under 10</option>
+                  <option>10–25</option>
+                  <option>25–50</option>
+                  <option>50–100</option>
+                  <option>100+</option>
+                </select>
+              </div>
+              <div class="fg form-full"><label>Do you have a CRM currently in use?</label>
+                <select name="crm">
+                  <option>No CRM yet</option>
+                  <option>HubSpot</option>
+                  <option>Salesforce</option>
+                  <option>GoHighLevel</option>
+                  <option>Zoho</option>
+                  <option>Notion / Airtable</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="fg form-full"><label>What's your biggest challenge with keeping clients? *</label><textarea name="challenge" placeholder="e.g. Clients go quiet after onboarding, high churn rate, no formal check-in process..." required></textarea></div>
+            </div>
+            <button type="submit" class="btn-submit">Submit Intake Form ✨</button>
+            <div class="form-success" id="acct-mgmt-form-success">✅ Received! We'll review before your discovery call.</div>
+          </form>
+        </div>
+      </div>
+      <div class="card-price-col" style="background:linear-gradient(160deg,var(--teal-deep),#0a4a5a);">
+        <div class="price">$300</div>
+        <div class="price-label">Per Month</div>
+        <div class="price-note">Retainer. Cancel anytime. No long-term contract.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STRATEGIC PROGRAMMING RETAINER -->
+  <div class="service-card" id="strategic-programming" style="border-color:rgba(201,168,76,0.4);">
+    <div class="card-inner">
+      <div class="card-content">
+        <span class="service-tag" style="background:rgba(201,168,76,0.15);color:var(--gold-light);">Strategic Programming · Retainer</span>
+        <div class="service-title">Strategic Programming Sessions</div>
+        <p class="service-desc">Monthly sessions where we map, build, and execute your business strategy together — from AI tool rollouts and process redesigns to growth initiatives and operational systems. Think fractional COO meets implementation consultant. Every session produces something tangible.</p>
+        <ul class="service-features">
+          <li>2× monthly strategy sessions (60 min each)</li>
+          <li>Project roadmap & prioritized 90-day action plan</li>
+          <li>Tool selection, setup & AI integration support</li>
+          <li>SOP documentation for key business processes</li>
+          <li>Implementation check-ins & accountability between sessions</li>
+          <li>Quarterly strategy review & goal reset</li>
+        </ul>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">Typical Timeline</div>
+          <div style="font-size:0.83rem;color:#a0a0a0;line-height:1.6;">Month 1: Business audit & 90-day roadmap &nbsp;·&nbsp; Month 2: Priority implementation sprint &nbsp;·&nbsp; Month 3+: Optimization, SOPs & next-phase planning</div>
+        </div>
+        <span class="retainer-note" style="border-color:rgba(201,168,76,0.25);color:var(--gold);">📅 $300/month · Cancel anytime</span><br/>
+        <a href="https://calendly.com/rootedllc2026/30min" target="_blank" class="btn-book" style="margin-top:1rem;background:linear-gradient(135deg,var(--gold),var(--gold-light));">📅 Book Free Discovery Call</a>
+
+        <div class="intake-form" style="margin-top:1.5rem;background:linear-gradient(135deg,#3a2a05,#5a4010);">
+          <h4>📋 Strategic Programming Intake</h4>
+          <p>Tell us where your business is today and where you want to be — we'll map the path.</p>
+          <form onsubmit="submitIntake(event, 'strategic-form', 'Strategic Programming Retainer')">
+            <div class="form-row">
+              <div class="fg"><label>First Name *</label><input type="text" name="firstName" placeholder="Jane" required/></div>
+              <div class="fg"><label>Last Name *</label><input type="text" name="lastName" placeholder="Smith" required/></div>
+              <div class="fg"><label>Email *</label><input type="email" name="email" placeholder="jane@yourbusiness.com" required/></div>
+              <div class="fg"><label>Phone</label><input type="tel" name="phone" placeholder="(215) 555-0100"/></div>
+              <div class="fg form-full"><label>Business Name *</label><input type="text" name="businessName" placeholder="Your Business LLC" required/></div>
+              <div class="fg form-full"><label>What stage is your business in? *</label>
+                <select name="stage" required>
+                  <option value="">Select a stage...</option>
+                  <option>Pre-launch / Idea stage</option>
+                  <option>Just launched (0–6 months)</option>
+                  <option>Early growth (6 months – 2 years)</option>
+                  <option>Established and scaling (2+ years)</option>
+                  <option>Pivoting or restructuring</option>
+                </select>
+              </div>
+              <div class="fg form-full"><label>What's your primary goal for the next 90 days? *</label>
+                <select name="primaryGoal" required>
+                  <option value="">Select your main focus...</option>
+                  <option>Systematize & document processes (SOPs)</option>
+                  <option>Integrate AI tools to save time</option>
+                  <option>Build a growth / marketing strategy</option>
+                  <option>Improve operations and workflows</option>
+                  <option>Launch a new product or service</option>
+                  <option>Increase revenue / find new clients</option>
+                  <option>Multiple goals (let's discuss)</option>
+                </select>
+              </div>
+              <div class="fg form-full"><label>What's holding your business back right now? *</label><textarea name="obstacles" placeholder="Be specific — e.g. too many manual tasks, no clear strategy, can't scale past current revenue, need better systems..." required></textarea></div>
+              <div class="fg form-full"><label>Are there specific tools or software you want help with?</label><textarea name="tools" placeholder="e.g. ChatGPT, Notion, HubSpot, Zapier, etc. — or just say 'not sure yet'"></textarea></div>
+            </div>
+            <button type="submit" class="btn-submit" style="background:linear-gradient(135deg,var(--gold),var(--gold-light));">Submit Intake Form ✨</button>
+            <div class="form-success" id="strategic-form-success">✅ Received! We'll review before your discovery call.</div>
+          </form>
+        </div>
+      </div>
+      <div class="card-price-col" style="background:linear-gradient(160deg,#5a3e0a,#8a6020);">
+        <div class="price">$300</div>
+        <div class="price-label">Per Month</div>
+        <div class="price-note">Retainer. Cancel anytime. No long-term contract.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /services-wrap -->
+
+<!-- FOOTER -->
+<footer style="background:#1a1a2e;color:rgba(255,255,255,0.6);text-align:center;padding:2.5rem 2rem;font-size:0.83rem;line-height:1.8;">
+  <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:white;margin-bottom:0.4rem;">SXY's <span style="color:#c9a84c;">Corporate</span> Club</div>
+  <p>Philadelphia · West Chester · Lancaster · Pittsburgh · Cherry Hill · Princeton · Nationwide (Virtual)</p>
+  <p style="margin-top:1rem;font-size:0.78rem;">© 2026 SXY's Corporate Club · Rooted LLC. All rights reserved.</p>
+</footer>
+
+<script>
+async function submitIntake(e, formId, serviceName) {
+  e.preventDefault();
+  var form = e.target;
+  var data = new FormData(form);
+  var payload = { service: serviceName, submittedAt: new Date().toLocaleString('en-US', {timeZone:'America/New_York'}) };
+  data.forEach(function(v, k) { payload[k] = v; });
+
+  // Send to Formspree
+  try {
+    await fetch('https://formspree.io/f/xjgakbnq', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch(err) {}
+
+  // Send to Zapier
+  try {
+    fetch('https://hooks.zapier.com/hooks/catch/26740514/uxhukoe/', {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch(err) {}
+
+  // Show success
+  form.reset();
+  var success = document.getElementById(formId + '-success');
+  if (success) { success.style.display = 'block'; }
+}
+</script>
+</body>
+</html>
