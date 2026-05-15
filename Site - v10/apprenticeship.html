@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apprenticeship Program — SXY's Corporate Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal-deep:#0d7a8c;
+  --teal-mid:#1ab8cc;
+  --teal-light:#5bcfdf;
+  --gold:#c9a84c;
+  --gold-light:#e8c97a;
+  --white:#ffffff;
+  --charcoal:#0a0a0a;
+  --black-bg:#000000;
+  --black-card:#111111;
+  --black-card-2:#161616;
+  --text-body:#e8e8e8;
+  --text-muted:#a0a0a0;
+  --border:rgba(255,255,255,0.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:var(--black-bg);color:var(--text-body);min-height:100vh}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-brand{font-family:"Playfair Display",serif;font-size:1.05rem;color:#fff;text-decoration:none}
+.nav-brand span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{color:var(--text-muted);text-decoration:none;font-size:0.83rem;font-weight:500;transition:color .15s}
+.nav-links a:hover{color:var(--gold-light)}
+.nav-links a.nav-cta{background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));color:#fff;padding:0.45rem 1.2rem;border-radius:20px;font-weight:600;font-size:0.8rem}
+.nav-links a.nav-cta:hover{opacity:0.9}
+
+/* HERO */
+.hero{min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(13,122,140,0.18) 0%,transparent 70%)}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:0.35rem 1rem;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:2rem}
+.hero h1{font-family:"Playfair Display",serif;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.12;color:#fff;max-width:780px;margin-bottom:1.5rem}
+.hero h1 em{color:var(--teal-mid);font-style:normal}
+.hero h1 .gold{color:var(--gold)}
+.hero-sub{font-size:1.05rem;color:var(--text-muted);max-width:580px;line-height:1.7;margin-bottom:2.8rem}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.btn-primary{background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));color:#fff;padding:0.85rem 2rem;border-radius:30px;font-family:"DM Sans",sans-serif;font-weight:600;font-size:0.92rem;text-decoration:none;transition:opacity .15s,transform .15s;display:inline-block}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-secondary{background:rgba(201,168,76,0.1);border:1.5px solid rgba(201,168,76,0.5);color:var(--gold-light);padding:0.85rem 2rem;border-radius:30px;font-family:"DM Sans",sans-serif;font-weight:600;font-size:0.92rem;text-decoration:none;transition:all .15s;display:inline-block}
+.btn-secondary:hover{background:rgba(201,168,76,0.18);transform:translateY(-1px)}
+
+/* SCROLL HINT */
+.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-muted);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;animation:bob 2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+.scroll-hint svg{width:18px;height:18px;opacity:0.5}
+
+/* HOW IT WORKS */
+.section{padding:90px 24px;position:relative}
+.section-inner{max-width:1100px;margin:0 auto}
+.label{font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:0.6rem}
+.section-title{font-family:"Playfair Display",serif;font-size:clamp(1.8rem,4vw,2.8rem);color:#fff;margin-bottom:0.8rem}
+.section-sub{font-size:0.95rem;color:var(--text-muted);max-width:560px;line-height:1.7;margin-bottom:3rem}
+
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.step{padding:2.2rem 2rem;background:var(--black-card);border-right:1px solid var(--border);position:relative}
+.step:last-child{border-right:none}
+.step-num{font-family:"Playfair Display",serif;font-size:3.5rem;font-weight:700;color:rgba(26,184,204,0.12);line-height:1;margin-bottom:1rem;position:absolute;top:1.2rem;right:1.5rem}
+.step-icon{font-size:1.6rem;margin-bottom:1rem}
+.step h4{font-family:"Playfair Display",serif;font-size:1.05rem;color:#fff;margin-bottom:0.5rem}
+.step p{font-size:0.84rem;color:var(--text-muted);line-height:1.65}
+
+/* TWO-TRACK SECTION */
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:700px){.tracks{grid-template-columns:1fr}}
+.track-card{background:var(--black-card);border-radius:16px;padding:2.5rem;border:1px solid var(--border);position:relative;overflow:hidden}
+.track-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.track-card.member::before{background:linear-gradient(90deg,var(--teal-deep),var(--teal-mid))}
+.track-card.business::before{background:linear-gradient(90deg,var(--gold),var(--gold-light))}
+.track-icon{font-size:2.2rem;margin-bottom:1.2rem}
+.track-card h3{font-family:"Playfair Display",serif;font-size:1.4rem;color:#fff;margin-bottom:0.6rem}
+.track-card .sub{font-size:0.83rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.65}
+.track-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem;margin-bottom:2rem}
+.track-list li{font-size:0.85rem;color:var(--text-body);display:flex;align-items:flex-start;gap:10px}
+.track-list li::before{content:'✓';color:var(--teal-mid);font-weight:700;flex-shrink:0;margin-top:1px}
+.track-card.business .track-list li::before{color:var(--gold)}
+.track-card .btn-track{display:block;text-align:center;padding:0.8rem;border-radius:10px;font-weight:600;font-size:0.88rem;text-decoration:none;transition:opacity .15s}
+.track-card.member .btn-track{background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));color:#fff}
+.track-card.business .btn-track{background:linear-gradient(135deg,#7a6010,var(--gold));color:#0a0a0a}
+.track-card .btn-track:hover{opacity:0.85}
+
+/* ELIGIBILITY */
+.elig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.elig-card{background:var(--black-card-2);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
+.elig-icon{font-size:1.4rem;margin-bottom:0.8rem}
+.elig-card h5{font-family:"Playfair Display",serif;font-size:0.95rem;color:#fff;margin-bottom:0.4rem}
+.elig-card p{font-size:0.82rem;color:var(--text-muted);line-height:1.6}
+
+/* INDUSTRIES */
+.ind-wrap{display:flex;flex-wrap:wrap;gap:10px;margin-top:2rem}
+.ind-chip{background:rgba(13,122,140,0.12);border:1px solid rgba(13,122,140,0.3);border-radius:20px;padding:0.4rem 1rem;font-size:0.8rem;color:var(--teal-light);font-weight:500}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:var(--black-card);border:none;padding:1.3rem 1.5rem;text-align:left;font-family:"DM Sans",sans-serif;font-size:0.9rem;font-weight:500;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-q:hover{background:var(--black-card-2)}
+.faq-arrow{width:16px;height:16px;stroke:var(--teal-mid);flex-shrink:0;transition:transform .2s}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{display:none;padding:0 1.5rem 1.3rem;font-size:0.85rem;color:var(--text-muted);line-height:1.7;background:var(--black-card)}
+.faq-item.open .faq-a{display:block}
+
+/* CTA BAND */
+.cta-band{background:linear-gradient(135deg,rgba(13,122,140,0.15),rgba(201,168,76,0.08));border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:80px 24px;text-align:center}
+.cta-band h2{font-family:"Playfair Display",serif;font-size:clamp(1.8rem,4vw,2.6rem);color:#fff;margin-bottom:1rem}
+.cta-band p{color:var(--text-muted);max-width:500px;margin:0 auto 2.5rem;font-size:0.95rem;line-height:1.7}
+
+/* FOOTER */
+footer{padding:48px 24px;text-align:center;border-top:1px solid var(--border)}
+.footer-brand{font-family:"Playfair Display",serif;font-size:1.1rem;color:#fff;margin-bottom:0.5rem}
+.footer-brand span{color:var(--gold)}
+footer p{font-size:0.8rem;color:var(--text-muted);margin-top:0.4rem}
+
+@media(max-width:600px){
+  .nav-links a:not(.nav-cta){display:none}
+  .steps-grid{grid-template-columns:1fr}
+  .step{border-right:none;border-bottom:1px solid var(--border)}
+  .step:last-child{border-bottom:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">SXY's <span>Corporate</span> Club</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="membership.html">Membership</a>
+      <a href="get-started.html">Services</a>
+      <a href="apprentice-apply.html" class="nav-cta">Apply Now →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🤝 New Program</div>
+  <h1>Real Experience.<br/><em>Real Businesses.</em><br/>Real <span class="gold">Opportunity.</span></h1>
+  <p class="hero-sub">SXY's Apprenticeship Program connects our most dedicated VIP members with vetted local businesses ready to invest in the next generation of professionals.</p>
+  <div class="hero-ctas">
+    <a href="apprentice-apply.html" class="btn-primary">Apply as an Apprentice →</a>
+    <a href="business-program.html" class="btn-secondary">List Your Program →</a>
+  </div>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    Learn more
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" style="background:var(--black-card)">
+  <div class="section-inner">
+    <div class="label">How It Works</div>
+    <div class="section-title">Simple. Structured. Supported.</div>
+    <p class="section-sub">Our strategists review every application and business program to make sure the match is meaningful — not just a placement.</p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">📋</div>
+        <h4>Submit Your Application</h4>
+        <p>Members apply through our guided chat with Sasha, our AI assistant. Businesses complete a program submission form. Our strategists review all submissions.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">🔍</div>
+        <h4>Program Review</h4>
+        <p>Our team evaluates each business program for structure, compensation commitment, and fit. Qualified programs are posted to our board for applicants to review.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">📬</div>
+        <h4>Applications Reviewed</h4>
+        <p>At the close of applications, our team reviews all candidates, notes any relevant context, and forwards qualified applicants to the business owner — who makes the final hiring decision.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-icon">🎉</div>
+        <h4>Placement & Announcement</h4>
+        <p>Winners are notified via email. With their permission, placements are celebrated in the SXY's Corporate Club community hub.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TWO TRACKS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="label">Two Ways to Participate</div>
+    <div class="section-title">Join as a Member or a Business</div>
+    <p class="section-sub">Whether you're looking to gain real-world experience or invest in emerging talent, there's a path for you.</p>
+    <div class="tracks">
+
+      <!-- MEMBER TRACK -->
+      <div class="track-card member">
+        <div class="track-icon">🎓</div>
+        <h3>For Apprentices</h3>
+        <p class="sub">VIP members in good standing for 6+ months are eligible to apply for available apprenticeship programs across our partner businesses.</p>
+        <ul class="track-list">
+          <li>Submit your resume, portfolio &amp; goals</li>
+          <li>Select preferred industry &amp; availability</li>
+          <li>Complete an interview with the employer</li>
+          <li>Receive support from SXY's strategist team</li>
+          <li>Get celebrated when you land the role</li>
+        </ul>
+        <a href="apprentice-apply.html" class="btn-track">Apply as an Apprentice →</a>
+      </div>
+
+      <!-- BUSINESS TRACK -->
+      <div class="track-card business">
+        <div class="track-icon">🏢</div>
+        <h3>For Businesses</h3>
+        <p class="sub">List your apprenticeship program and gain access to a motivated, pre-vetted pool of talent from SXY's Corporate Club community.</p>
+        <ul class="track-list">
+          <li>Submit your program details &amp; structure</li>
+          <li>Set your compensation commitment</li>
+          <li>Receive curated candidate packets</li>
+          <li>You make the final hiring decision</li>
+          <li>Build your team with community-rooted talent</li>
+        </ul>
+        <a href="business-program.html" class="btn-track">List Your Program →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ELIGIBILITY -->
+<section class="section" style="background:var(--black-card)">
+  <div class="section-inner">
+    <div class="label">Member Eligibility</div>
+    <div class="section-title">Who Can Apply?</div>
+    <p class="section-sub">The apprenticeship program is reserved for our most committed VIP members. Here's what you need to qualify.</p>
+    <div class="elig-grid">
+      <div class="elig-card">
+        <div class="elig-icon">👑</div>
+        <h5>Active VIP Membership</h5>
+        <p>You must hold an active VIP membership at SXY's Corporate Club to be eligible to apply.</p>
+      </div>
+      <div class="elig-card">
+        <div class="elig-icon">📅</div>
+        <h5>6 Months of Membership</h5>
+        <p>Applicants must have been VIP members in good standing for a minimum of six consecutive months.</p>
+      </div>
+      <div class="elig-card">
+        <div class="elig-icon">📄</div>
+        <h5>Supporting Materials</h5>
+        <p>A resume and any relevant portfolio or certifications are required as part of your application.</p>
+      </div>
+      <div class="elig-card">
+        <div class="elig-icon">🤝</div>
+        <h5>Employer Interview</h5>
+        <p>Shortlisted candidates will complete an interview directly with the business owner or hiring contact.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem">
+      <div class="label">Industries We Serve</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff;margin-top:0.4rem">Programs span the industries our members know best</div>
+      <div class="ind-wrap">
+        <span class="ind-chip">🏗️ Construction & Contracting</span>
+        <span class="ind-chip">🌿 Landscaping</span>
+        <span class="ind-chip">💄 Beauty & Wellness</span>
+        <span class="ind-chip">💼 Entrepreneurship</span>
+        <span class="ind-chip">💻 Software & Tech</span>
+        <span class="ind-chip">🛒 E-Commerce</span>
+        <span class="ind-chip">🍽️ Food & Catering</span>
+        <span class="ind-chip">🧹 Cleaning Services</span>
+        <span class="ind-chip">🏠 Real Estate</span>
+        <span class="ind-chip">📦 Logistics & Delivery</span>
+        <span class="ind-chip">📊 Finance & Bookkeeping</span>
+        <span class="ind-chip">⚖️ Legal Support</span>
+        <span class="ind-chip">❄️ HVAC & Mechanical</span>
+        <span class="ind-chip">🔧 Plumbing & Electrical</span>
+        <span class="ind-chip">🎨 Creative & Design</span>
+        <span class="ind-chip">📣 Marketing & Social Media</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="label">Questions</div>
+    <div class="section-title">Frequently Asked</div>
+    <p class="section-sub" style="margin-bottom:2rem">Everything you need to know before applying or listing a program.</p>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is this program only for VIP members?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Yes. The apprenticeship program is exclusive to VIP members who have held their membership for at least 6 consecutive months. Not a VIP member yet? <a href="membership.html" style="color:var(--teal-mid)">Upgrade your plan here →</a></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Are apprenticeships paid?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">It depends on the business program. Each listing clearly states whether the position is paid, unpaid (for experience), or includes a stipend. Businesses offering paid programs must sign a financial commitment agreement before their listing is approved.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How does the selection process work?
+          <svg class="faq-arrow" viewBox="0 0 24 184" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">After applications close, our team of business strategists reviews all candidates and forwards a curated packet to the business owner — including any relevant notes. The business owner makes the final hiring decision. All parties are notified via email.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What does it cost for a business to list a program?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Businesses pay a one-time program setup fee per listing: <strong>$150 for unpaid/experience-based programs</strong> and <strong>$250 for paid or stipend programs</strong>. Programs requiring more extensive background check coordination may incur an additional fee — our team will confirm that with you during review. A monthly active program fee applies while your listing remains open. All fees are confirmed before your listing goes live.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Can I apply to more than one program?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Yes — you may apply to multiple programs. However, each application must be submitted separately with the specific program in mind. Sasha will guide you through the process for each one.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Will my placement be announced publicly?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a">Only with your permission. We'll ask both the member and the business owner separately before making any announcement in our community hub. Your privacy is always respected.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>Ready to Take the Next Step?</h2>
+  <p>Whether you're looking to grow your skills or grow your team, the SXY's Corporate Club Apprenticeship Program is designed to help both sides win.</p>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+    <a href="apprentice-apply.html" class="btn-primary">Apply as an Apprentice →</a>
+    <a href="business-program.html" class="btn-secondary">List Your Business Program →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">SXY's <span>Corporate</span> Club</div>
+  <p>Apprenticeship Program — Connecting Talent with Opportunity</p>
+  <p style="margin-top:1rem;font-size:0.75rem">© 2026 SXY's Corporate Club. All rights reserved.</p>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>

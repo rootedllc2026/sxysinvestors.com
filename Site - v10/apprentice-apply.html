@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  if (window.location.hash) { history.replaceState(null, null, ' '); }
+  window.addEventListener('load', function() { setTimeout(function() { window.scrollTo(0, 0); }, 50); });
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apprentice Application — SXY's Corporate Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal-deep:#0d7a8c;--teal-mid:#1ab8cc;--teal-light:#5bcfdf;
+  --gold:#c9a84c;--gold-light:#e8c97a;
+  --white:#ffffff;--charcoal:#0a0a0a;
+  --black-bg:#000000;--black-card:#111111;--black-card-2:#161616;
+  --text-body:#e8e8e8;--text-muted:#a0c4cc;--border:rgba(255,255,255,0.09);
+}
+body{font-family:"DM Sans",sans-serif;background:#000;color:var(--white);min-height:100vh;display:flex;flex-direction:column}
+
+/* TOP BAR */
+.topbar{background:var(--charcoal);padding:13px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.tb-brand{display:flex;align-items:center;gap:10px}
+.tb-logo{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));display:flex;align-items:center;justify-content:center}
+.tb-logo svg{width:15px;height:15px}
+.tb-name{font-family:"Playfair Display",serif;font-size:14px;font-weight:500;color:#fff}
+.tb-sub{font-size:10px;color:var(--gold-light);letter-spacing:.05em;margin-top:1px}
+.tb-link{font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;display:flex;align-items:center;gap:4px;transition:color .15s}
+.tb-link:hover{color:var(--gold-light)}
+
+/* PAGE */
+.page{max-width:680px;margin:0 auto;padding:28px 18px 60px;width:100%}
+
+/* VIDEO CARD */
+.vcard{background:var(--black-bg);border-radius:16px;border:1px solid var(--border);overflow:hidden;margin-bottom:20px;box-shadow:0 2px 14px rgba(0,0,0,.3)}
+.vcard-head{padding:16px 20px 0;display:flex;align-items:center;gap:12px}
+.av{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);flex-shrink:0}
+.av-fallback{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));border:2px solid var(--gold);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:"Playfair Display",serif;font-size:16px;color:#fff;font-weight:500}
+.av-name{font-family:"Playfair Display",serif;font-size:15px;font-weight:500;color:#fff}
+.av-role{font-size:11px;color:var(--text-muted);margin-top:1px}
+.online{display:flex;align-items:center;gap:4px;font-size:11px;color:#3b9e6e;margin-left:auto;flex-shrink:0}
+.online-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.vcard-body{padding:16px 20px 20px}
+.vcaption{font-size:12.5px;color:var(--text-muted);text-align:center;margin-top:11px;line-height:1.55}
+.start-btn{display:block;width:100%;padding:15px;background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));color:#fff;border:none;border-radius:10px;font-family:"DM Sans",sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:opacity .15s;margin-top:14px;letter-spacing:.01em}
+.start-btn:hover{opacity:0.88}
+
+/* CHAT CARD */
+.ccard{background:var(--black-bg);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,.3);display:none}
+.ccard.visible{display:block}
+.ccard-head{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.prog-wrap{height:3px;background:#111}
+.prog{height:3px;background:linear-gradient(90deg,var(--teal-deep),var(--teal-mid));transition:width .4s ease;width:0%}
+.msgs{padding:18px 15px;display:flex;flex-direction:column;gap:12px;min-height:200px;max-height:520px;overflow-y:auto;scroll-behavior:smooth}
+.msgs::-webkit-scrollbar{width:3px}
+.msgs::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+
+/* BUBBLES */
+.msg{display:flex;gap:8px;align-items:flex-end;animation:fadeUp .22s ease}
+.msg.u{flex-direction:row-reverse}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.msg-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));border:1.5px solid var(--gold);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:"Playfair Display",serif;font-size:11px;color:#fff;font-weight:500}
+.msg-av-u{width:28px;height:28px;border-radius:50%;background:#1a1a1a;border:1.5px solid #333;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888;font-weight:500}
+.bbl{max-width:78%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.55}
+.msg:not(.u) .bbl{background:var(--black-card);border:1px solid var(--border);color:var(--text-body);border-bottom-left-radius:4px}
+.msg.u .bbl{background:linear-gradient(135deg,var(--teal-deep),rgba(26,184,204,0.85));color:#fff;border-bottom-right-radius:4px}
+
+/* TYPING */
+.typing{display:flex;align-items:center;gap:4px;padding:10px 14px;background:var(--black-card);border:1px solid var(--border);border-radius:14px;border-bottom-left-radius:4px;width:fit-content}
+.typing span{width:6px;height:6px;border-radius:50%;background:#666;animation:blink 1.2s ease-in-out infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px);background:var(--teal-mid)}}
+
+/* INPUT AREA */
+#ia{padding:0 0 4px}
+.inp{width:100%;padding:12px 14px;background:#1a1a1a;border:1.5px solid rgba(13,122,140,0.35);border-radius:9px;font-family:"DM Sans",sans-serif;font-size:14px;color:#fff;outline:none;transition:border-color .15s;margin-bottom:8px}
+.inp:focus{border-color:var(--teal-mid)}
+.inp::placeholder{color:#555}
+textarea.inp{resize:vertical;min-height:80px}
+.opts{padding:8px 15px 14px;display:flex;flex-wrap:wrap;gap:8px}
+.opt{padding:9px 14px;border-radius:20px;border:1.5px solid rgba(13,122,140,0.4);background:transparent;color:var(--teal-light);font-family:"DM Sans",sans-serif;font-size:13.5px;cursor:pointer;transition:all .15s;text-align:left}
+.opt:hover{background:rgba(13,122,140,0.15);border-color:var(--teal-mid)}
+.send-btn{width:calc(100% - 30px);margin:0 15px 15px;padding:12px;background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));color:#fff;border:none;border-radius:9px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .15s}
+.send-btn:hover{opacity:0.88}
+.disc{padding:10px 15px 14px;font-size:11px;color:#444;text-align:center}
+
+/* UPLOAD ZONE */
+.upload-zone{margin:8px 15px;border:1.5px dashed rgba(13,122,140,0.4);border-radius:10px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .15s;position:relative}
+.upload-zone:hover{border-color:var(--teal-mid);background:rgba(13,122,140,0.06)}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-zone p{font-size:13px;color:#666;margin-top:0.4rem}
+.upload-zone strong{font-size:14px;color:var(--teal-light)}
+.uploaded-files{margin:0 15px 8px;display:flex;flex-direction:column;gap:6px}
+.uploaded-file{background:#1a1a1a;border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:12px;color:#aaa;display:flex;justify-content:space-between;align-items:center}
+.uploaded-file .remove{background:none;border:none;color:#666;cursor:pointer;font-size:14px;padding:0 4px}
+.uploaded-file .remove:hover{color:#ff6b6b}
+
+/* SUMMARY */
+.summ{padding:16px 15px;background:var(--black-card-2);border-top:1px solid var(--border)}
+.summ-title{font-family:"Playfair Display",serif;font-size:15px;color:#fff;margin-bottom:14px;line-height:1.4}
+.summ-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px;gap:12px}
+.summ-row:last-of-type{border-bottom:none}
+.sl{color:#666;flex-shrink:0;min-width:120px}
+.sv{color:#ddd;text-align:right;word-break:break-word}
+.summ-btns{display:flex;gap:10px;margin-top:16px}
+.summ-btn{flex:1;padding:11px;border-radius:9px;border:1.5px solid var(--border);background:transparent;font-family:"DM Sans",sans-serif;font-size:13.5px;color:#888;cursor:pointer}
+.summ-btn.confirm{background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));color:#fff;border:none;font-weight:500}
+
+/* SUCCESS */
+.success{padding:2.5rem 1.5rem;text-align:center}
+.success-icon{width:52px;height:52px;border-radius:50%;background:rgba(74,222,128,0.12);border:2px solid #4ade80;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem}
+.success-icon svg{width:22px;height:22px}
+.success-h{font-family:"Playfair Display",serif;font-size:1.3rem;color:#fff;margin-bottom:0.5rem}
+.success-p{font-size:13.5px;color:#888;line-height:1.6;max-width:380px;margin:0 auto}
+.success-note{font-size:11px;color:#555;margin-top:1.2rem}
+
+/* GATE OVERLAY */
+.gate-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:999;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(8px)}
+.gate-card{background:#111;border:1px solid rgba(201,168,76,0.3);border-radius:20px;max-width:480px;width:100%;padding:2.8rem 2.2rem;text-align:center}
+.gate-icon{font-size:2.8rem;margin-bottom:1.2rem}
+.gate-h{font-family:"Playfair Display",serif;font-size:1.5rem;color:#fff;margin-bottom:0.6rem}
+.gate-p{font-size:0.88rem;color:#888;line-height:1.7;margin-bottom:2rem}
+.gate-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(13,122,140,0.12);border:1px solid rgba(13,122,140,0.3);border-radius:20px;padding:0.35rem 1rem;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#5bcfdf;margin-bottom:1.5rem}
+.gate-btns{display:flex;flex-direction:column;gap:10px}
+.gate-btn-primary{display:block;padding:0.85rem;background:linear-gradient(135deg,#0a5c6b,#1ab8cc);color:#fff;border-radius:10px;font-family:"DM Sans",sans-serif;font-weight:600;font-size:0.9rem;text-decoration:none}
+.gate-btn-secondary{display:block;padding:0.75rem;background:transparent;border:1.5px solid rgba(201,168,76,0.3);color:#c9a84c;border-radius:10px;font-family:"DM Sans",sans-serif;font-weight:600;font-size:0.88rem;text-decoration:none}
+.gate-note{font-size:0.76rem;color:#444;margin-top:1.2rem;line-height:1.55}
+</style>
+</head>
+<body>
+
+<!-- MEMBERSTACK VIP GATE -->
+<div class="gate-overlay" id="ms-gate" style="display:none">
+  <div class="gate-card">
+    <div class="gate-icon">👑</div>
+    <div class="gate-badge">VIP Members Only</div>
+    <div class="gate-h">This Program Is Exclusive to VIP Members</div>
+    <p class="gate-p">The Apprenticeship Program is available to VIP members in good standing for 6+ months. Upgrade your plan to unlock eligibility and access real business opportunities in our community.</p>
+    <div class="gate-btns">
+      <a href="https://sxyscorporateclub.com/signup?tier=vip" class="gate-btn-primary">Upgrade to VIP →</a>
+      <a href="https://sxyscorporateclub.com/login" class="gate-btn-secondary">Sign In to Your Account</a>
+      <a href="apprenticeship.html" class="gate-btn-secondary" style="border-color:rgba(255,255,255,0.1);color:#666;">← Back to Program Info</a>
+    </div>
+    <div class="gate-note">Already a VIP member for 6+ months? Make sure you're signed in above. If you believe this is an error, <a href="mailto:admin@sxysinvestors.com" style="color:#1ab8cc">contact our team</a>.</div>
+  </div>
+</div>
+
+<script>
+// ── MEMBERSTACK VIP GATE ─────────────────────────────────────────────────────
+(function() {
+  var gate = document.getElementById('ms-gate');
+  var REQUIRED_PLAN_ID = 'pln_vip'; // Update to your actual Memberstack VIP plan ID
+  var REQUIRED_MONTHS = 6;
+
+  function showGate() { gate.style.display = 'flex'; }
+  function hideGate() { gate.style.display = 'none'; }
+
+  function monthsSince(dateStr) {
+    if (!dateStr) return 0;
+    var start = new Date(dateStr);
+    var now = new Date();
+    return (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+  }
+
+  // Poll for Memberstack
+  var checked = false;
+  var attempts = 0;
+  var poll = setInterval(function() {
+    attempts++;
+    if (attempts > 30) { // 3 seconds max wait, then gate
+      clearInterval(poll);
+      if (!checked) showGate();
+      return;
+    }
+    if (window.$memberstackDom) {
+      clearInterval(poll);
+      window.$memberstackDom.getCurrentMember().then(function(res) {
+        checked = true;
+        if (!res || !res.data) { showGate(); return; }
+        var member = res.data;
+        var plans = member.planConnections || [];
+        var vipPlan = plans.find(function(p) {
+          return p.planId && (
+            p.planId === REQUIRED_PLAN_ID ||
+            p.planId.toLowerCase().indexOf('vip') !== -1
+          );
+        });
+        if (!vipPlan) { showGate(); return; }
+        // Check tenure — use startDate or createdAt
+        var startDate = vipPlan.startDate || vipPlan.createdAt || member.createdAt || '';
+        var months = monthsSince(startDate);
+        if (months < REQUIRED_MONTHS) {
+          // Show special "not yet eligible" message
+          document.querySelector('.gate-h').textContent = 'Almost There, ' + (member.auth?.email?.split('@')[0] || 'Member') + '!';
+          document.querySelector('.gate-p').textContent = 'You're a VIP member — great! Apprenticeship eligibility unlocks at 6 months of VIP membership. You're ' + months + ' month' + (months === 1 ? '' : 's') + ' in. Check back when you've hit 6 months!';
+          document.querySelector('.gate-icon').textContent = '⏳';
+          showGate();
+          return;
+        }
+        // All good — member is VIP 6+ months
+        hideGate();
+      }).catch(function() {
+        checked = true;
+        showGate();
+      });
+    }
+  }, 100);
+})();
+</script>
+
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="tb-brand">
+    <div class="tb-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    </div>
+    <div>
+      <div class="tb-name">SXY's Corporate Club</div>
+      <div class="tb-sub">Apprentice Application</div>
+    </div>
+  </div>
+  <a href="apprenticeship.html" class="tb-link">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to Program
+  </a>
+</div>
+
+<div class="page">
+
+  <!-- WELCOME CARD -->
+  <div class="vcard" id="video-card">
+    <div class="vcard-head">
+      <div class="av-fallback" id="av-head">S</div>
+      <img class="av" id="av-img" src="sashaavatar.png" alt="Sasha" style="display:none" onload="this.style.display='block';document.getElementById('av-head').style.display='none'">
+      <div>
+        <div class="av-name">Sasha</div>
+        <div class="av-role">Membership Manager · SXY's Corporate Club</div>
+      </div>
+      <div class="online"><div class="online-dot"></div>Online now</div>
+    </div>
+    <div class="vcard-body">
+      <div style="background:#111;border-radius:10px;padding:2rem;text-align:center;border:1px solid rgba(201,168,76,0.15)">
+        <div style="font-size:2.5rem;margin-bottom:1rem">🎓</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;margin-bottom:0.6rem">Welcome to the Apprenticeship Program</div>
+        <div style="font-size:13.5px;color:#888;line-height:1.65;max-width:440px;margin:0 auto">I'm Sasha, your guide for this application. I'll walk you through everything step by step — it only takes a few minutes. Your information is private and goes directly to our team of business strategists for review.</div>
+      </div>
+      <div class="vcaption">This application is for VIP members who have been in good standing for 6+ months.</div>
+      <button class="start-btn" onclick="startApp()">I'm ready — let's apply! →</button>
+    </div>
+  </div>
+
+  <!-- CHAT CARD -->
+  <div class="ccard" id="chat-card">
+    <div class="ccard-head">
+      <div class="av-fallback" style="width:36px;height:36px;font-size:14px">S</div>
+      <div>
+        <div class="av-name" style="font-size:14px">Sasha</div>
+        <div class="av-role">Membership Manager</div>
+      </div>
+      <div class="online" style="margin-left:auto"><div class="online-dot"></div>Online</div>
+    </div>
+    <div class="prog-wrap"><div class="prog" id="prog"></div></div>
+    <div class="msgs" id="msgs"></div>
+    <div id="ia"></div>
+    <div class="disc">SXY's Corporate Club · Your information is private and secure.</div>
+  </div>
+
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxzazWlTgNPpXpwLLMSIwSoHvb0aBNakLIaN-qmpqCZJfEMQwoomxQfmr6Uptji1JdI/exec';
+const NOTIFY_EMAIL = 'admin@sxysinvestors.com';
+
+let answers = {};
+let step = 0;
+let firstName = '';
+let uploadedFiles = [];
+
+// ── UTILS ───────────────────────────────────────────────────────────────────
+function setProgress(p) { document.getElementById('prog').style.width = p + '%'; }
+
+function scrollMsgs() {
+  const m = document.getElementById('msgs');
+  setTimeout(() => { m.scrollTop = m.scrollHeight; }, 50);
+}
+
+function clearIA() { document.getElementById('ia').innerHTML = ''; }
+
+function agentMsg(html) {
+  return new Promise(resolve => {
+    const msgs = document.getElementById('msgs');
+    const typing = document.createElement('div');
+    typing.className = 'msg';
+    typing.innerHTML = `<div class="msg-av">S</div><div class="typing"><span></span><span></span><span></span></div>`;
+    msgs.appendChild(typing);
+    scrollMsgs();
+    setTimeout(() => {
+      typing.remove();
+      const d = document.createElement('div');
+      d.className = 'msg';
+      d.innerHTML = `<div class="msg-av">S</div><div class="bbl">${html}</div>`;
+      msgs.appendChild(d);
+      scrollMsgs();
+      resolve();
+    }, 900 + Math.random() * 400);
+  });
+}
+
+function userMsg(text) {
+  const msgs = document.getElementById('msgs');
+  const d = document.createElement('div');
+  d.className = 'msg u';
+  d.innerHTML = `<div class="msg-av-u">Me</div><div class="bbl">${text}</div>`;
+  msgs.appendChild(d);
+  scrollMsgs();
+}
+
+function showOptions(opts, onSelect) {
+  const ia = document.getElementById('ia');
+  clearIA();
+  const wrap = document.createElement('div');
+  wrap.className = 'opts';
+  opts.forEach(o => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = o.label;
+    btn.onclick = () => {
+      clearIA();
+      userMsg(o.label);
+      onSelect(o.value !== undefined ? o.value : o.label, o.label);
+    };
+    wrap.appendChild(btn);
+  });
+  ia.appendChild(wrap);
+  scrollMsgs();
+}
+
+function showTextInput(placeholder, onSubmit, multiline) {
+  const ia = document.getElementById('ia');
+  clearIA();
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'padding:8px 15px 14px';
+  const el = document.createElement(multiline ? 'textarea' : 'input');
+  el.className = 'inp';
+  el.placeholder = placeholder;
+  if (multiline) el.rows = 3;
+  const btn = document.createElement('button');
+  btn.className = 'send-btn';
+  btn.textContent = 'Continue →';
+  const submit = () => {
+    const v = el.value.trim();
+    if (!v) { el.style.borderColor = '#D85A30'; setTimeout(() => el.style.borderColor = '', 800); return; }
+    clearIA();
+    userMsg(v.length > 120 ? v.slice(0, 120) + '…' : v);
+    onSubmit(v);
+  };
+  btn.onclick = submit;
+  el.addEventListener('keydown', e => { if (!multiline && e.key === 'Enter') submit(); });
+  wrap.appendChild(el); wrap.appendChild(btn);
+  ia.appendChild(wrap);
+  setTimeout(() => el.focus(), 100);
+  scrollMsgs();
+}
+
+function showUpload(onContinue) {
+  const ia = document.getElementById('ia');
+  clearIA();
+
+  const zone = document.createElement('div');
+  zone.className = 'upload-zone';
+  zone.innerHTML = `
+    <input type="file" id="file-input" multiple accept=".pdf,.doc,.docx,.png,.jpg,.jpeg">
+    <strong>📎 Click to upload your documents</strong>
+    <p>Resume, portfolio, certifications — PDF, Word, or image files</p>`;
+  
+  const fileList = document.createElement('div');
+  fileList.className = 'uploaded-files';
+  fileList.id = 'file-list';
+
+  const btn = document.createElement('button');
+  btn.className = 'send-btn';
+  btn.textContent = 'Continue →';
+  btn.style.marginTop = '8px';
+
+  zone.querySelector('#file-input').addEventListener('change', e => {
+    Array.from(e.target.files).forEach(f => {
+      if (!uploadedFiles.find(u => u.name === f.name)) {
+        uploadedFiles.push(f);
+      }
+    });
+    renderFileList(fileList);
+  });
+
+  btn.onclick = () => {
+    clearIA();
+    const names = uploadedFiles.length ? uploadedFiles.map(f => f.name).join(', ') : 'No documents uploaded';
+    userMsg(uploadedFiles.length ? `📎 Uploaded: ${names}` : 'Skip — no documents right now');
+    onContinue(uploadedFiles);
+  };
+
+  const skipBtn = document.createElement('button');
+  skipBtn.style.cssText = 'width:calc(100% - 30px);margin:6px 15px 0;padding:10px;border-radius:9px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;font-family:"DM Sans",sans-serif;font-size:13px;color:#666;cursor:pointer';
+  skipBtn.textContent = 'Skip for now — I\'ll send documents separately';
+  skipBtn.onclick = () => {
+    clearIA();
+    userMsg('Skip for now');
+    onContinue([]);
+  };
+
+  ia.appendChild(zone);
+  ia.appendChild(fileList);
+  ia.appendChild(document.createElement('div')).style.height = '8px';
+  ia.appendChild(btn);
+  ia.appendChild(skipBtn);
+  scrollMsgs();
+}
+
+function renderFileList(container) {
+  container.innerHTML = '';
+  uploadedFiles.forEach((f, i) => {
+    const row = document.createElement('div');
+    row.className = 'uploaded-file';
+    row.innerHTML = `<span>📄 ${f.name} <span style="color:#555">(${(f.size/1024).toFixed(0)}KB)</span></span>`;
+    const rm = document.createElement('button');
+    rm.className = 'remove';
+    rm.innerHTML = '✕';
+    rm.onclick = () => { uploadedFiles.splice(i, 1); renderFileList(container); };
+    row.appendChild(rm);
+    container.appendChild(row);
+  });
+}
+
+// ── START ────────────────────────────────────────────────────────────────────
+function startApp() {
+  document.getElementById('video-card').style.display = 'none';
+  const cc = document.getElementById('chat-card');
+  cc.style.display = 'block';
+  setTimeout(() => cc.classList.add('visible'), 10);
+  step = 0;
+  nextStep();
+}
+
+// ── CONVERSATION ─────────────────────────────────────────────────────────────
+async function nextStep() {
+  step++;
+
+  if (step === 1) {
+    setProgress(5);
+    await agentMsg('Hi there! I\'m Sasha 👋<br><br>I\'ll be guiding you through your Apprenticeship Program application today. This is exciting — and I\'m going to make it as easy as possible for you.<br><br>I\'ll ask you questions one at a time. Take your breath. Ready to begin?');
+    showOptions([{label:'Yes, let\'s go! 🎓'},{label:'Ready when you are'}], () => nextStep());
+
+  } else if (step === 2) {
+    setProgress(10);
+    await agentMsg('First — what\'s your full name?');
+    showTextInput('Your first and last name...', async (val) => {
+      answers.fname = val.split(' ')[0] || val;
+      answers.lname = val.split(' ').slice(1).join(' ') || '';
+      firstName = answers.fname;
+      await agentMsg(`Great to meet you, ${firstName}! 🤝`);
+      nextStep();
+    });
+
+  } else if (step === 3) {
+    setProgress(17);
+    await agentMsg(`${firstName}, what\'s the best phone number to reach you? And if you have an email address, feel free to add that too.`);
+    const ia = document.getElementById('ia');
+    clearIA();
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'padding:8px 15px 14px;display:flex;flex-direction:column;gap:8px';
+    const ph = document.createElement('input'); ph.className='inp'; ph.type='tel'; ph.placeholder='Phone number...';
+    const em = document.createElement('input'); em.className='inp'; em.type='email'; em.placeholder='Email address...';
+    const btn = document.createElement('button'); btn.className='send-btn'; btn.textContent='Continue →';
+    btn.onclick = () => {
+      if (!ph.value.trim()) { ph.style.borderColor='#D85A30'; setTimeout(()=>ph.style.borderColor='',800); return; }
+      clearIA();
+      userMsg(ph.value.trim() + (em.value.trim() ? ' · ' + em.value.trim() : ''));
+      answers.phone = ph.value.trim();
+      answers.email = em.value.trim();
+      nextStep();
+    };
+    wrap.appendChild(ph); wrap.appendChild(em); wrap.appendChild(btn);
+    ia.appendChild(wrap);
+    setTimeout(() => ph.focus(), 100);
+    scrollMsgs();
+
+  } else if (step === 4) {
+    setProgress(24);
+    await agentMsg('What is your zip code? This helps us understand the communities our program is reaching. 📍');
+    showTextInput('5-digit zip code...', async (val) => {
+      answers.zip = val.trim();
+      await agentMsg('Perfect — noted! Now let\'s talk about your experience and goals. 🌟');
+      nextStep();
+    });
+
+  } else if (step === 5) {
+    setProgress(31);
+    await agentMsg(`${firstName}, which industry are you most interested in for your apprenticeship? Tap the one that fits best — or pick "Other" if yours isn't listed!`);
+    showOptions([
+      {label:'🏗️ Construction & Contracting', value:'Construction & Contracting'},
+      {label:'🌿 Landscaping', value:'Landscaping'},
+      {label:'💄 Beauty & Wellness', value:'Beauty & Wellness'},
+      {label:'💼 Entrepreneurship / Small Business', value:'Entrepreneurship'},
+      {label:'💻 Software & Technology', value:'Software & Technology'},
+      {label:'🛒 E-Commerce', value:'E-Commerce'},
+      {label:'🍽️ Food, Catering & Hospitality', value:'Food & Hospitality'},
+      {label:'🧹 Cleaning Services', value:'Cleaning Services'},
+      {label:'🏠 Real Estate', value:'Real Estate'},
+      {label:'📊 Finance & Bookkeeping', value:'Finance & Bookkeeping'},
+      {label:'📣 Marketing & Social Media', value:'Marketing & Social Media'},
+      {label:'⚖️ Legal Support', value:'Legal Support'},
+      {label:'✨ Other', value:'other'}
+    ], async (val, label) => {
+      if (val === 'other') {
+        answers.industry = 'other';
+        await agentMsg('No problem! Can you describe the industry you\'re interested in?');
+        showTextInput('e.g. Transportation, event planning, graphic design...', async (v) => {
+          answers.industryOther = v;
+          await agentMsg(`${v} — that\'s a great space to grow in! 🌟`);
+          nextStep();
+        });
+      } else {
+        answers.industry = val;
+        answers.industryOther = '';
+        await agentMsg(`${label.slice(3).trim()} — great choice! 🌟`);
+        nextStep();
+      }
+    });
+
+  } else if (step === 6) {
+    setProgress(39);
+    await agentMsg('What is your general availability? This helps businesses understand when you\'re able to commit.');
+    showOptions([
+      {label:'Full-time (40 hrs/week)', value:'Full-time'},
+      {label:'Part-time (20–30 hrs/week)', value:'Part-time (20–30 hrs/wk)'},
+      {label:'Flexible / weekends only', value:'Flexible / weekends'},
+      {label:'Evenings & weekends', value:'Evenings & weekends'},
+      {label:'Mornings only', value:'Mornings only'},
+    ], async (val) => {
+      answers.availability = val;
+      nextStep();
+    });
+
+  } else if (step === 7) {
+    setProgress(47);
+    await agentMsg(`Tell me about your key skills, ${firstName}. What do you bring to the table?<br><br><em style="font-size:12px;color:#666">Think: technical skills, soft skills, tools you know, certifications — anything you\'re proud of!</em>`);
+    showTextInput('Share your skills...', async (val) => {
+      answers.skills = val;
+      await agentMsg('Love it! Now tell me about your proudest accomplishment — big or small.');
+      nextStep();
+    }, true);
+
+  } else if (step === 8) {
+    setProgress(54);
+    await agentMsg('What\'s an accomplishment you\'re proud of? Could be professional, educational, personal — anything that shows what you\'re capable of.');
+    showTextInput('Share an accomplishment...', async (val) => {
+      answers.accomplishments = val;
+      nextStep();
+    }, true);
+
+  } else if (step === 9) {
+    setProgress(61);
+    await agentMsg(`What are your goals for this apprenticeship, ${firstName}? What do you hope to learn or achieve?`);
+    showTextInput('Describe your goals...', async (val) => {
+      answers.goals = val;
+      nextStep();
+    }, true);
+
+  } else if (step === 10) {
+    setProgress(69);
+    await agentMsg('Is there anything else you\'d like our team to know? This is optional but a great place for any relevant disclosures, context, or anything that didn\'t fit above.<br><br><em style="font-size:12px;color:#666">You can also share if you have specific program preferences, scheduling needs, or other comments.</em>');
+    const ia = document.getElementById('ia');
+    clearIA();
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'padding:8px 15px 14px;display:flex;flex-direction:column;gap:8px';
+    const ta = document.createElement('textarea');
+    ta.className = 'inp'; ta.placeholder = 'Optional — additional comments or disclosures...'; ta.rows = 3;
+    const row = document.createElement('div'); row.style.cssText = 'display:flex;gap:8px';
+    const skip = document.createElement('button');
+    skip.style.cssText = 'flex:1;padding:11px;border-radius:9px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;font-family:"DM Sans",sans-serif;font-size:13px;color:#666;cursor:pointer';
+    skip.textContent = 'Skip';
+    const cont = document.createElement('button');
+    cont.style.cssText = 'flex:2;padding:11px;border-radius:9px;border:none;background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));color:#fff;font-family:"DM Sans",sans-serif;font-size:13.5px;font-weight:500;cursor:pointer';
+    cont.textContent = 'Continue →';
+    const go = (v) => { clearIA(); userMsg(v || 'No additional comments'); answers.comments = v; nextStep(); };
+    skip.onclick = () => go('');
+    cont.onclick = () => go(ta.value.trim());
+    row.appendChild(skip); row.appendChild(cont);
+    wrap.appendChild(ta); wrap.appendChild(row);
+    ia.appendChild(wrap);
+    scrollMsgs();
+
+  } else if (step === 11) {
+    setProgress(78);
+    await agentMsg(`Almost there, ${firstName}! 🎉<br><br>Please upload any documents you\'d like to include — resume, portfolio, certifications, or other relevant materials. You can upload multiple files.<br><br><em style="font-size:12px;color:#666">Don\'t have them ready? No worries — you can skip and we\'ll follow up with you.</em>`);
+    showUpload(async (files) => {
+      uploadedFiles = files;
+      await agentMsg(files.length > 0 ? `Received ${files.length} document${files.length > 1 ? 's' : ''}! 📎 You\'re in great shape.` : `No problem at all — our team will follow up if anything is needed.`);
+      nextStep();
+    });
+
+  } else if (step === 12) {
+    setProgress(88);
+    await agentMsg(`Last thing — how did you hear about the Apprenticeship Program?`);
+    showOptions([
+      {label:'Through my VIP membership', value:'VIP membership materials'},
+      {label:'From another member', value:'Word of mouth / member referral'},
+      {label:'Social media', value:'Social media'},
+      {label:'Community event', value:'Community event'},
+      {label:'Email or newsletter', value:'Email / newsletter'},
+      {label:'Somewhere else', value:'other'}
+    ], async (val, label) => {
+      if (val === 'other') {
+        answers.referral = 'other';
+        await agentMsg('Where did you hear about it?');
+        showTextInput('Tell us how you found out...', async (v) => {
+          answers.referralOther = v;
+          await agentMsg('Great — thank you! Let me pull together a summary for you. 📋');
+          showSummary();
+        });
+      } else {
+        answers.referral = val;
+        answers.referralOther = '';
+        await agentMsg('Wonderful! Let me pull together a summary for you. 📋');
+        showSummary();
+      }
+    });
+  }
+}
+
+// ── SUMMARY ──────────────────────────────────────────────────────────────────
+function showSummary() {
+  setProgress(96);
+  clearIA();
+  const ia = document.getElementById('ia');
+  const ind = answers.industry === 'other' ? (answers.industryOther || 'Other') : answers.industry;
+  const rows = [
+    ['Name', `${answers.fname} ${answers.lname}`],
+    ['Phone', answers.phone],
+    answers.email ? ['Email', answers.email] : null,
+    ['Zip Code', answers.zip],
+    ['Industry Interest', ind],
+    ['Availability', answers.availability],
+    ['Skills', answers.skills ? answers.skills.slice(0, 80) + (answers.skills.length > 80 ? '…' : '') : '—'],
+    ['Accomplishments', answers.accomplishments ? answers.accomplishments.slice(0, 80) + (answers.accomplishments.length > 80 ? '…' : '') : '—'],
+    ['Goals', answers.goals ? answers.goals.slice(0, 80) + (answers.goals.length > 80 ? '…' : '') : '—'],
+    uploadedFiles.length ? ['Documents', `${uploadedFiles.length} file(s) attached`] : ['Documents', 'None uploaded'],
+    ['How you heard', answers.referral === 'other' ? answers.referralOther : answers.referral],
+  ].filter(Boolean);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'summ';
+  wrap.innerHTML = `<div class="summ-title">Here\'s your application summary, ${firstName} — does everything look right?</div>` +
+    rows.map(([l,v]) => `<div class="summ-row"><span class="sl">${l}</span><span class="sv">${v || '—'}</span></div>`).join('') +
+    `<div class="summ-btns">
+      <button class="summ-btn" onclick="goBack()">Fix something</button>
+      <button class="summ-btn confirm" onclick="submitApp()">Yes — submit my application ✓</button>
+    </div>`;
+  ia.appendChild(wrap);
+  scrollMsgs();
+}
+
+function goBack() {
+  clearIA();
+  step = 1;
+  agentMsg(`No problem, ${firstName}! Let\'s go back. What\'s your full name?`).then(() => { step = 2; nextStep(); });
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+async function submitApp() {
+  clearIA();
+  userMsg('Yes — submit my application ✓');
+  setProgress(100);
+  await agentMsg(`Your application is in, ${firstName}! 🎉<br><br>Our team of business strategists will review your submission and be in touch with next steps. Make sure to keep an eye on your phone and email.<br><br>Thank you for being part of SXY\'s Corporate Club — we\'re rooting for you! ✨`);
+
+  const payload = {
+    type: 'Apprentice Application',
+    fname: answers.fname || '',
+    lname: answers.lname || '',
+    phone: answers.phone || '',
+    email: answers.email || '',
+    zip: answers.zip || '',
+    industry: answers.industry === 'other' ? answers.industryOther : (answers.industry || ''),
+    availability: answers.availability || '',
+    skills: answers.skills || '',
+    accomplishments: answers.accomplishments || '',
+    goals: answers.goals || '',
+    comments: answers.comments || '',
+    referral: answers.referral === 'other' ? answers.referralOther : (answers.referral || ''),
+    documentsUploaded: uploadedFiles.length > 0 ? uploadedFiles.map(f => f.name).join(', ') : 'None',
+    submittedAt: new Date().toLocaleString(),
+    addedBy: 'Sasha (Apprentice Application)',
+    status: 'pending_review'
+  };
+
+  // Google Sheet submission
+  const cbName = 'cb_' + Date.now();
+  window[cbName] = function() { delete window[cbName]; };
+  const params = Object.keys(payload).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(payload[k])).join('&');
+  const script = document.createElement('script');
+  script.src = SHEET_URL + '?' + params + '&callback=' + cbName + '&sheet=Apprentices';
+  document.head.appendChild(script);
+  setTimeout(() => { if (script.parentNode) script.parentNode.removeChild(script); }, 10000);
+
+  // Notify via API
+  try {
+    await fetch('https://www.sxyscorporateclub.com/api/public/intake', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        full_name: `${answers.fname} ${answers.lname}`,
+        email: answers.email || '',
+        phone: answers.phone || '',
+        business_name: answers.industry || 'Apprentice Applicant',
+        service_interest: 'Apprenticeship Program',
+        message: `APPRENTICE APPLICATION\n\nSkills: ${answers.skills}\n\nAccomplishments: ${answers.accomplishments}\n\nGoals: ${answers.goals}\n\nAvailability: ${answers.availability}\n\nIndustry: ${answers.industry}\n\nComments: ${answers.comments}\n\nDocuments: ${payload.documentsUploaded}`,
+        preferred_contact: answers.email ? 'Email' : 'Phone',
+        source: 'apprentice-apply',
+        notify_emails: [NOTIFY_EMAIL]
+      })
+    });
+  } catch(e) { console.warn('API error:', e); }
+
+  setTimeout(() => {
+    document.getElementById('ia').innerHTML = `
+      <div class="success">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="success-h">Application Received, ${firstName}!</div>
+        <div class="success-p">Our team of business strategists will review your submission and reach out with next steps soon. Keep an eye on your phone and email!</div>
+        <div class="success-note">SXY\'s Corporate Club · sxysinvestors.com</div>
+      </div>`;
+    scrollMsgs();
+  }, 1500);
+}
+</script>
+</body>
+</html>

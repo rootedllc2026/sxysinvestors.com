@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  // Prevent anchor-jump on page load
+  if (window.location.hash) {
+    history.replaceState(null, null, ' ');
+  }
+  window.addEventListener('load', function() {
+    setTimeout(function() { window.scrollTo(0, 0); }, 50);
+  });
+</script>
+
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Join Economy Bites | SXY's Corporate Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <!-- Memberstack -->
+
+  <style>
+      :root {
+    --teal-deep: #0d7a8c;
+    --teal-mid: #1ab8cc;
+    --teal-light: #5bcfdf;
+    --teal-pale: #0a2a2e;
+    --teal-mist: #071f22;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #1a1408;
+    --white: #ffffff;
+    --charcoal: #0a0a0a;
+    --text-body: #e8e8e8;
+    --text-muted: #a0c4cc;
+    --black-bg: #000000;
+    --black-bg-2: #0a0a0a;
+    --black-card: #111111;
+    --black-card-2: #161616;
+  }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background: #000000;color:#d0d0d0;min-height:100vh}
+
+    nav{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3rem;background: #000000;box-shadow: 0 2px 20px rgba(0,0,0,0.5);}
+    .nav-logo{display:flex;align-items:center;gap:0.7rem}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{text-decoration:none;color:#d0d0d0;font-size:0.88rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase}
+    .nav-links a:hover{color:var(--teal-mid)}
+    .nav-cta{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--charcoal)!important;padding:0.55rem 1.4rem;border-radius:30px;font-weight:700!important}
+    @media(max-width:768px){nav{padding:1rem 1.2rem}.nav-links{display:none}}
+
+    /* HERO */
+    .mem-hero{background:linear-gradient(135deg,var(--teal-deep),#0d7a8a,#1a8a9a);padding:5rem 2rem 4rem;text-align:center;position:relative;overflow:hidden}
+    .mem-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:350px;height:350px;background:rgba(201,168,76,0.08);border-radius:50%}
+    .mem-hero .badge{display:inline-block;background:rgba(201,168,76,0.2);border:1px solid rgba(201,168,76,0.4);color:var(--gold-l);padding:0.4rem 1.2rem;border-radius:30px;font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem}
+    .mem-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);color:white;margin-bottom:1rem;line-height:1.2}
+    .mem-hero h1 em{color:var(--gold-l);font-style:italic}
+    .mem-hero p{color:rgba(255,255,255,0.85);font-size:1.05rem;max-width:540px;margin:0 auto;line-height:1.7}
+
+    /* PRICING */
+    .pricing-wrap{max-width:900px;margin:0 auto;padding:5rem 2rem}
+    .pricing-title{text-align:center;font-family:'Playfair Display',serif;font-size:2rem;color: var(--white);margin-bottom:0.5rem}
+    .pricing-sub{text-align:center;color:#a0c4cc;margin-bottom:3rem;font-size:1rem}
+    .plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem}
+
+    .plan-card {background: #111111;border-radius:24px;padding:2.5rem 2rem;box-shadow:0 4px 24px rgba(10,92,107,0.08);border:2px solid rgba(10,92,107,0.08);text-align:center;transition:transform 0.2s}
+    .plan-card:hover{transform:translateY(-4px)}
+    .plan-card.featured{border-color:var(--gold);box-shadow:0 8px 40px rgba(201,168,76,0.2);position:relative}
+    .plan-card.featured::before{content:'Most Popular';position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--gold),var(--gold-l));color: var(--white);padding:0.3rem 1.2rem;border-radius:20px;font-size:0.75rem;font-weight:700;white-space:nowrap}
+    .plan-icon{font-size:2.5rem;margin-bottom:1rem}
+    .plan-name{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--teal-deep);margin-bottom:0.5rem}
+    .plan-price{font-size:2.5rem;font-weight:700;color: var(--white);margin-bottom:0.2rem}
+    .plan-price span{font-size:1rem;font-weight:400;color:#a0c4cc}
+    .plan-desc{color:#a0c4cc;font-size:0.88rem;margin-bottom:1.5rem;line-height:1.6}
+    .plan-features{list-style:none;margin-bottom:2rem;text-align:left}
+    .plan-features li{padding:0.45rem 0;font-size:0.9rem;color:#d0d0d0;display:flex;align-items:center;gap:0.6rem;border-bottom:1px solid rgba(10,92,107,0.05)}
+    .plan-features li:last-child{border:none}
+    .plan-features li::before{content:'✓';color:var(--teal-mid);font-weight:700;flex-shrink:0}
+    .btn-plan{display:block;width:100%;padding:0.9rem;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;border:none;text-decoration:none;transition:all 0.2s}
+    .btn-plan.teal{background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));color:white;box-shadow:0 4px 14px rgba(10,92,107,0.25)}
+    .btn-plan.teal:hover{box-shadow:0 8px 24px rgba(10,92,107,0.4);transform:translateY(-2px)}
+    .btn-plan.gold{background:linear-gradient(135deg,var(--gold),var(--gold-l));color: var(--white);box-shadow:0 4px 14px rgba(201,168,76,0.3)}
+    .btn-plan.gold:hover{box-shadow:0 8px 24px rgba(201,168,76,0.5);transform:translateY(-2px)}
+
+    /* LOGIN SECTION */
+    .login-section{background:linear-gradient(135deg,#e8f7fa,#f0fbfd);padding:3rem 2rem;text-align:center}
+    .login-box{max-width:420px;margin:0 auto;background: #000000;border-radius:20px;padding:2.5rem;box-shadow:0 4px 24px rgba(10,92,107,0.08)}
+    .login-box h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--teal-deep);margin-bottom:0.5rem}
+    .login-box p{color:#a0c4cc;font-size:0.9rem;margin-bottom:1.5rem}
+    .btn-login{display:block;width:100%;padding:0.85rem;border-radius:12px;background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));color:white;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .btn-login:hover{box-shadow:0 8px 24px rgba(10,92,107,0.3);transform:translateY(-2px)}
+
+    /* PERKS */
+    .perks-wrap{max-width:900px;margin:0 auto;padding:4rem 2rem}
+    .perks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:2rem}
+    .perk{text-align:center;padding:1.5rem;background: #000000;border-radius:16px;box-shadow:0 2px 12px rgba(10,92,107,0.06)}
+    .perk-icon{font-size:2rem;margin-bottom:0.6rem}
+    .perk h4{font-family:'Playfair Display',serif;font-size:1rem;color:var(--teal-deep);margin-bottom:0.3rem}
+    .perk p{font-size:0.83rem;color:#a0c4cc;line-height:1.5}
+
+    footer{background:var(--charcoal);color:rgba(255,255,255,0.7);text-align:center;padding:2.5rem 2rem;font-size:0.85rem}
+    .footer-brand{font-family:'Playfair Display',serif;font-size:1.3rem;color:white;margin-bottom:0.5rem}
+    .footer-brand span{color:var(--gold)}
+  
+  /* === BLACK THEME: Alternating heading colors === */
+  h1 { color: var(--teal-mid) !important; }
+  h2 { color: var(--gold) !important; }
+  h3 { color: #ffffff !important; }
+  h4 { color: var(--teal-light) !important; }
+  h5 { color: var(--gold-light) !important; }
+  h6 { color: #ffffff !important; }
+  
+  /* Section headings - alternate teal/gold/white */
+  .section-title { color: var(--gold) !important; }
+  .section-subtitle { color: var(--teal-light) !important; }
+  .hero-title { color: var(--teal-mid) !important; }
+  .hero-subtitle { color: var(--gold-light) !important; }
+  
+  /* Body text */
+  p { color: #d0d0d0; }
+  .text-muted, .muted { color: var(--teal-light) !important; }
+  
+  /* Cards - dark theme */
+  .stat-card, .service-card, .feature-card, .testimonial-card,
+  .why-card, .value-card, .tier-card, .plan-card, .step-card,
+  .faq-item, .benefit-card, .info-card, .card { 
+    background: #111111 !important; 
+    border-color: rgba(13,122,140,0.25) !important;
+  }
+  
+  /* Sections */
+  section, .section, .stats-section, .features-section,
+  .about-section, .testimonials-section, .faq-section,
+  .cta-section, .pricing-section, .process-section {
+    background: #000000 !important;
+  }
+  
+  /* Alternating section backgrounds */
+  section:nth-child(even) { background: #080808 !important; }
+  section:nth-child(odd) { background: #000000 !important; }
+  
+  /* Nav */
+  nav { background: rgba(0,0,0,0.95) !important; }
+  nav a { color: #d0d0d0 !important; }
+  nav a:hover { color: var(--gold) !important; }
+  .nav-logo { color: var(--teal-mid) !important; }
+  .nav-logo span { color: var(--gold) !important; }
+  
+  /* Inputs */
+  input, textarea, select {
+    background: #1a1a1a !important;
+    color: #ffffff !important;
+    border-color: rgba(13,122,140,0.4) !important;
+  }
+  input::placeholder, textarea::placeholder { color: #606060 !important; }
+  
+  /* Footer */
+  footer { background: #050505 !important; color: #a0a0a0 !important; }
+  footer a { color: var(--teal-light) !important; }
+  footer h3, footer h4 { color: var(--gold) !important; }
+  
+  /* Labels and small text */
+  label { color: var(--teal-light) !important; }
+  .badge, .tag { background: rgba(13,122,140,0.2) !important; color: var(--teal-light) !important; }
+  
+  /* Dividers */
+  hr { border-color: rgba(201,168,76,0.2) !important; }
+  
+  /* List items */
+  li { color: #d0d0d0; }
+  
+  /* Links */
+  a { color: var(--teal-mid); }
+  a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img src="logo.png" alt="SXY's Corporate Club" style="height:52px;width:auto;object-fit:contain;">
+    <span style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#1ab8cc;margin-left:0.5rem;">SXY's <span style="color:#c9a84c;">Corporate</span> Club</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="marketing-services.html">Marketing</a></li>
+    <li><a href="get-started.html" style="color:#1ab8cc;font-weight:700;">Get Started</a></li>
+    <li><a href="apprenticeship.html" style="color:#c9a84c;font-weight:600;">Apprenticeships</a></li><li><a href="https://sxyscorporateclub.com/login" class="nav-portal" style="color:#2ab8cc;font-weight:600;">Member Portal →</a></li><li><a href="index.html#book" class="nav-cta">Book Free Call</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="mem-hero">
+  <div class="badge">🎬 Members Only Content</div>
+  <h1>Join <em>Economy Bites</em><br/>Get Smarter About Business</h1>
+  <p>Short, sharp video insights on market trends, business tips, and entrepreneurship — delivered exclusively to members.</p>
+</section>
+
+<!-- PERKS -->
+<div class="perks-wrap">
+  <div style="text-align:center;margin-bottom:0.5rem;font-size:0.78rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal-mid)">Member Benefits</div>
+  <div style="text-align:center;font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--charcoal);margin-bottom:0.5rem">What You Get Access To</div>
+  <div class="perks-grid">
+    <div class="perk"><div class="perk-icon">📈</div><h4>Market Updates</h4><p>Weekly market analysis and economic insights from Janay</p></div>
+    <div class="perk"><div class="perk-icon">💼</div><h4>Business Tips</h4><p>Practical advice for growing and protecting your business</p></div>
+    <div class="perk"><div class="perk-icon">🤖</div><h4>AI & Tech</h4><p>Stay ahead with the latest AI tools for entrepreneurs</p></div>
+    <div class="perk"><div class="perk-icon">💰</div><h4>Financial Wellness</h4><p>Smart money strategies for business owners</p></div>
+    <div class="perk"><div class="perk-icon">🏛️</div><h4>Entity Formation</h4><p>Tips on structuring and protecting your business legally</p></div>
+    <div class="perk"><div class="perk-icon">🎬</div><h4>New Videos Weekly</h4><p>Fresh content added every week — never miss an insight</p></div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="pricing-wrap">
+  <div class="pricing-title">Choose Your Plan</div>
+  <p class="pricing-sub">Cancel anytime. No long-term commitment required.</p>
+  <div class="plans-grid">
+
+    <div class="plan-card">
+      <div class="plan-icon">🆓</div>
+      <div class="plan-name">Free Membership</div>
+      <div class="plan-price">$0<span>/forever</span></div>
+      <p class="plan-desc">Create a free account and get instant access to Business Bites. No credit card needed.</p>
+      <ul class="plan-features">
+        <li>Full Business Bites library</li>
+        <li>New business tip videos weekly</li>
+        <li>No credit card required</li>
+        <li>Cancel anytime</li>
+      </ul>
+      <a href="https://sxyscorporateclub.com/signup?tier=free" class="btn-plan teal">Join Free →</a>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-icon">📖</div>
+      <div class="plan-name">Monthly</div>
+      <div class="plan-price">$5<span>/month</span></div>
+      <p class="plan-desc">Business Bites + Market Bites + Bankruptcy Bites. Full access to everything for $5/month.</p>
+      <ul class="plan-features">
+        <li>Business Bites (free tier)</li>
+        <li>Market Bites — premium</li>
+        <li>Bankruptcy Bites — premium</li>
+        <li>New videos added weekly</li>
+        <li>Cancel anytime</li>
+      </ul>
+      <a href="https://sxyscorporateclub.com/signup?tier=paid" class="btn-plan teal">Join Monthly →</a>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="plan-icon">⭐</div>
+      <div class="plan-name">Annual</div>
+      <div class="plan-price">$49<span>/year</span></div>
+      <p class="plan-desc">Full access to all content — Business, Market &amp; Bankruptcy Bites. Best value at $4.08/month.</p>
+      <ul class="plan-features">
+        <li>Everything in Monthly</li>
+        <li>Save 18% vs monthly billing</li>
+        <li>Priority access to new content</li>
+        <li>Exclusive member Q&A sessions</li>
+      </ul>
+      <a href="https://sxyscorporateclub.com/signup?tier=annual" class="btn-plan gold">Join Annual → Best Value</a>
+    </div>
+
+    <!-- VIP PLAN -->
+    <div class="plan-card" style="border-color:#1ab8cc;box-shadow:0 8px 32px rgba(10,92,107,0.2);position:relative;">
+      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#0a5c6b,#1a8a9a);color:white;padding:0.3rem 1.2rem;border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;white-space:nowrap;">👑 MOST EXCLUSIVE</div>
+      <div class="plan-name">VIP</div>
+      <div class="plan-price">$29<span class="plan-period">/month</span></div>
+      <p class="plan-desc">Everything in Pro plus a live monthly group coaching call with Janay — ask questions, get strategy, grow faster.</p>
+      <ul class="plan-features">
+        <li>✓ All Business Bites videos</li>
+        <li>✓ All Market Bites videos</li>
+        <li>✓ All Bankruptcy Bites videos</li>
+        <li>✓ Monthly live group coaching call with Janay</li>
+        <li>✓ Priority Q&amp;A access</li>
+        <li>✓ Early access to new content</li>
+        <li>✓ <strong style="color:#c9a84c;">Apprenticeship Program eligibility</strong> after 6 months</li>
+      </ul>
+      <a href="https://sxyscorporateclub.com/signup?tier=vip" class="plan-btn" style="background:linear-gradient(135deg,#0a5c6b,#1a8a9a);color:white;">Join VIP →</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- APPRENTICESHIP PROMO BAND -->
+<div style="background:linear-gradient(135deg,rgba(13,122,140,0.12),rgba(201,168,76,0.08));border-top:1px solid rgba(201,168,76,0.2);border-bottom:1px solid rgba(13,122,140,0.2);padding:3.5rem 2rem;text-align:center;">
+  <div style="max-width:640px;margin:0 auto">
+    <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#1ab8cc;margin-bottom:0.6rem">🤝 New for VIP Members</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:#fff;margin-bottom:0.8rem">Apprenticeship Program</div>
+    <p style="font-size:0.9rem;color:#a0a0a0;line-height:1.7;margin-bottom:2rem">VIP members in good standing for 6+ months are eligible to apply for real apprenticeship opportunities with vetted businesses across our community — from landscaping and beauty to tech and e-commerce.</p>
+    <a href="apprenticeship.html" style="display:inline-block;background:linear-gradient(135deg,#0a5c6b,#1ab8cc);color:#fff;padding:0.8rem 2rem;border-radius:30px;font-weight:600;font-size:0.9rem;text-decoration:none;">Learn About the Program →</a>
+  </div>
+</div>
+
+<!-- LOGIN SECTION -->
+<div id="signin"></div>
+<section class="login-section">
+  <div class="login-box" style="border:2px solid rgba(201,168,76,0.4);box-shadow:0 8px 32px rgba(201,168,76,0.15);">
+    <h3>Already a Member?</h3>
+    <p>Sign in to access your Economy Bites content.</p>
+    <a href="https://sxyscorporateclub.com/login" class="btn-login">Sign In to Your Account →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">SXY's <span>Corporate</span> Club</div>
+  <p>Economy Bites — Exclusive Video Content for Members</p>
+  <p style="margin-top:1rem;font-size:0.78rem">© 2026 SXY's Corporate Club. All rights reserved.</p>
+</footer>
+
+
+</body>
+</html>

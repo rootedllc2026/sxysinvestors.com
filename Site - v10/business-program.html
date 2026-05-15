@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List Your Apprenticeship Program — SXY's Corporate Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal-deep:#0d7a8c;--teal-mid:#1ab8cc;--teal-light:#5bcfdf;
+  --gold:#c9a84c;--gold-light:#e8c97a;
+  --white:#ffffff;--charcoal:#0a0a0a;
+  --black-bg:#000000;--black-card:#111111;--black-card-2:#161616;
+  --text-body:#e8e8e8;--text-muted:#999;--border:rgba(255,255,255,0.09);
+}
+body{font-family:"DM Sans",sans-serif;background:var(--black-bg);color:var(--text-body);min-height:100vh}
+
+/* NAV */
+nav{background:rgba(0,0,0,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:58px}
+.nav-brand{font-family:"Playfair Display",serif;font-size:1rem;color:#fff;text-decoration:none}
+.nav-brand span{color:var(--gold)}
+.nav-back{font-size:0.83rem;color:var(--text-muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .15s}
+.nav-back:hover{color:var(--gold-light)}
+.nav-back svg{width:14px;height:14px;stroke:currentColor}
+
+/* HERO */
+.hero{padding:72px 24px 48px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 20%,rgba(201,168,76,0.1) 0%,transparent 70%)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:0.35rem 1rem;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:1.5rem}
+.hero h1{font-family:"Playfair Display",serif;font-size:clamp(2rem,5vw,3rem);color:#fff;line-height:1.15;max-width:700px;margin:0 auto 1rem}
+.hero h1 em{color:var(--teal-mid);font-style:normal}
+.hero p{font-size:0.95rem;color:var(--text-muted);max-width:520px;margin:0 auto;line-height:1.7}
+
+/* FEE NOTICE */
+.fee-notice{max-width:860px;margin:0 auto 0;padding:0 24px}
+.fee-card{background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.25);border-radius:12px;padding:1.2rem 1.5rem;display:flex;align-items:flex-start;gap:12px}
+.fee-icon{font-size:1.3rem;flex-shrink:0;margin-top:1px}
+.fee-card p{font-size:0.84rem;color:var(--gold-light);line-height:1.65}
+.fee-card strong{color:var(--gold)}
+
+/* FORM SECTION */
+.form-wrap{max-width:860px;margin:0 auto;padding:48px 24px 80px}
+.form-card{background:var(--black-card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.form-header{padding:2rem 2.2rem 1.5rem;border-bottom:1px solid var(--border)}
+.form-section-title{font-family:"Playfair Display",serif;font-size:1.3rem;color:#fff;margin-bottom:0.3rem}
+.form-section-sub{font-size:0.84rem;color:var(--text-muted)}
+.form-body{padding:2rem 2.2rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.fg{display:flex;flex-direction:column;gap:0.4rem}
+.fg.full{grid-column:1/-1}
+label{font-size:0.8rem;font-weight:600;color:var(--teal-light);letter-spacing:0.04em;text-transform:uppercase}
+label .req{color:var(--gold)}
+input,textarea,select{background:#1a1a1a;border:1.5px solid rgba(13,122,140,0.3);border-radius:8px;padding:0.7rem 0.9rem;font-family:"DM Sans",sans-serif;font-size:0.88rem;color:#fff;outline:none;transition:border-color .15s;width:100%}
+input:focus,textarea:focus,select:focus{border-color:var(--teal-mid)}
+input::placeholder,textarea::placeholder{color:#444}
+select option{background:#1a1a1a}
+textarea{resize:vertical;min-height:90px}
+
+/* DIVIDERS */
+.form-divider{margin:0 2.2rem;border:none;border-top:1px solid var(--border)}
+.form-section-header{padding:1.8rem 2.2rem 1rem;display:flex;align-items:center;gap:12px}
+.form-section-icon{font-size:1.2rem}
+.form-section-label{font-family:"Playfair Display",serif;font-size:1.1rem;color:#fff}
+.form-section-note{font-size:0.8rem;color:var(--text-muted)}
+
+/* RADIO / CHECKBOX GROUP */
+.radio-group,.check-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
+.radio-opt,.check-opt{display:flex;align-items:center;gap:8px;padding:8px 14px;background:#1a1a1a;border:1.5px solid rgba(13,122,140,0.25);border-radius:8px;cursor:pointer;font-size:0.84rem;color:var(--text-body);transition:all .15s;user-select:none}
+.radio-opt:hover,.check-opt:hover{border-color:var(--teal-mid);background:rgba(13,122,140,0.1)}
+.radio-opt input,.check-opt input{width:16px;height:16px;accent-color:var(--teal-mid);flex-shrink:0;cursor:pointer}
+.radio-opt.gold-opt{border-color:rgba(201,168,76,0.25)}
+.radio-opt.gold-opt:hover{border-color:var(--gold);background:rgba(201,168,76,0.08)}
+.radio-opt.gold-opt input{accent-color:var(--gold)}
+
+/* COMMITMENT BOX */
+.commitment-box{background:rgba(201,168,76,0.05);border:1.5px solid rgba(201,168,76,0.25);border-radius:10px;padding:1.2rem 1.4rem;margin-top:0.4rem}
+.commitment-box p{font-size:0.83rem;color:var(--gold-light);line-height:1.7;margin-bottom:1rem}
+.commitment-box strong{color:var(--gold)}
+.commitment-check{display:flex;align-items:flex-start;gap:10px;font-size:0.84rem;color:var(--text-body);cursor:pointer}
+.commitment-check input{width:18px;height:18px;accent-color:var(--gold);flex-shrink:0;margin-top:2px;cursor:pointer}
+
+/* INDUSTRY CHIPS */
+.industry-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.ind-chip-label{display:flex;align-items:center;gap:6px;padding:7px 12px;background:#1a1a1a;border:1.5px solid rgba(13,122,140,0.25);border-radius:20px;cursor:pointer;font-size:0.82rem;color:var(--text-body);transition:all .15s;user-select:none}
+.ind-chip-label:hover{border-color:var(--teal-mid);background:rgba(13,122,140,0.1)}
+.ind-chip-label input{display:none}
+.ind-chip-label.selected{background:rgba(13,122,140,0.18);border-color:var(--teal-mid);color:var(--teal-light)}
+
+/* SUBMIT */
+.form-footer{padding:1.5rem 2.2rem 2rem;border-top:1px solid var(--border);background:var(--black-card-2)}
+.submit-btn{width:100%;padding:1rem;background:linear-gradient(135deg,#7a6010,var(--gold));color:#0a0a0a;border:none;border-radius:10px;font-family:"DM Sans",sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .15s;letter-spacing:0.02em}
+.submit-btn:hover{opacity:0.88}
+.submit-note{font-size:0.78rem;color:#555;text-align:center;margin-top:0.8rem;line-height:1.55}
+
+/* SUCCESS */
+.success-screen{display:none;padding:4rem 2rem;text-align:center}
+.success-screen.visible{display:block}
+.s-icon{width:60px;height:60px;border-radius:50%;background:rgba(74,222,128,0.1);border:2px solid #4ade80;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem}
+.s-icon svg{width:26px;height:26px}
+.s-h{font-family:"Playfair Display",serif;font-size:1.6rem;color:#fff;margin-bottom:0.6rem}
+.s-p{font-size:0.9rem;color:var(--text-muted);max-width:440px;margin:0 auto;line-height:1.7}
+.s-note{font-size:0.78rem;color:#444;margin-top:1.5rem}
+
+/* ERROR */
+.field-error{font-size:0.76rem;color:#ff6b6b;margin-top:2px}
+input.error,textarea.error,select.error{border-color:#ff4444}
+
+@media(max-width:600px){
+  .form-grid{grid-template-columns:1fr}
+  .fg.full{grid-column:1}
+  .form-body,.form-footer,.form-divider,.form-section-header{padding-left:1.2rem;padding-right:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">SXY's <span>Corporate</span> Club</a>
+    <a href="apprenticeship.html" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Apprenticeship Program
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🏢 For Businesses</div>
+  <h1>List Your<br/><em>Apprenticeship Program</em></h1>
+  <p>Submit your program details and gain access to a motivated, pre-vetted pool of VIP talent from SXY's Corporate Club community.</p>
+</div>
+
+<!-- FEE NOTICE -->
+<div class="fee-notice">
+  <div class="fee-card">
+    <div class="fee-icon">💼</div>
+    <p><strong>Business Participation Fee:</strong> A one-time program setup fee applies per listing — <strong>$150 for unpaid or experience-based programs</strong> and <strong>$250 for paid or stipend programs</strong>. Programs requiring more extensive background check coordination may incur an additional fee, which our team will confirm before your listing is approved. A monthly active program fee applies while your listing remains open. All fees are confirmed before your program goes live. Listing your program is a commitment to the community — all programs are carefully vetted before approval.</p>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap">
+  <div class="form-card" id="form-card">
+
+    <!-- Section 1: Business Info -->
+    <div class="form-header">
+      <div class="form-section-title">Business Information</div>
+      <div class="form-section-sub">Tell us about the business listing this program.</div>
+    </div>
+    <div class="form-body">
+      <div class="form-grid">
+        <div class="fg"><label>Business Name <span class="req">*</span></label><input type="text" id="biz-name" placeholder="Your Business LLC"/></div>
+        <div class="fg"><label>Point of Contact — Full Name <span class="req">*</span></label><input type="text" id="poc-name" placeholder="First and last name"/></div>
+        <div class="fg"><label>Contact Email <span class="req">*</span></label><input type="email" id="poc-email" placeholder="your@email.com"/></div>
+        <div class="fg"><label>Contact Phone <span class="req">*</span></label><input type="tel" id="poc-phone" placeholder="(215) 555-0100"/></div>
+        <div class="fg"><label>Business Website</label><input type="url" id="biz-website" placeholder="https://yourbusiness.com"/></div>
+        <div class="fg"><label>Zip Code / City <span class="req">*</span></label><input type="text" id="biz-zip" placeholder="e.g. 19121 or Philadelphia, PA"/></div>
+        <div class="fg full"><label>Brief Business Description <span class="req">*</span></label><textarea id="biz-desc" placeholder="Describe your business — what you do, who you serve, how long you've been operating..."></textarea></div>
+      </div>
+    </div>
+
+    <!-- Section 2: Industry -->
+    <hr class="form-divider">
+    <div class="form-section-header">
+      <div class="form-section-icon">🏭</div>
+      <div>
+        <div class="form-section-label">Industry</div>
+        <div class="form-section-note">Select all that apply to your business.</div>
+      </div>
+    </div>
+    <div class="form-body" style="padding-top:0">
+      <div class="industry-chips" id="industry-chips">
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Construction & Contracting"> 🏗️ Construction & Contracting</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Landscaping"> 🌿 Landscaping</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Beauty & Wellness"> 💄 Beauty & Wellness</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Entrepreneurship"> 💼 Entrepreneurship</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Software & Technology"> 💻 Software & Technology</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="E-Commerce"> 🛒 E-Commerce</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Food & Hospitality"> 🍽️ Food & Hospitality</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Cleaning Services"> 🧹 Cleaning Services</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Real Estate"> 🏠 Real Estate</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Finance & Bookkeeping"> 📊 Finance & Bookkeeping</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Marketing & Social Media"> 📣 Marketing & Social Media</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Legal Support"> ⚖️ Legal Support</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="HVAC & Mechanical"> ❄️ HVAC & Mechanical</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Plumbing & Electrical"> 🔧 Plumbing & Electrical</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Creative & Design"> 🎨 Creative & Design</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Logistics & Delivery"> 📦 Logistics & Delivery</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Healthcare & Caregiving"> 🏥 Healthcare & Caregiving</label>
+        <label class="ind-chip-label"><input type="checkbox" name="industry" value="Other"> ✨ Other</label>
+      </div>
+      <div class="fg" style="margin-top:1rem" id="other-industry-wrap" style="display:none">
+        <label>If "Other" — describe your industry</label>
+        <input type="text" id="other-industry" placeholder="e.g. Transportation, event planning..."/>
+      </div>
+    </div>
+
+    <!-- Section 3: Program Details -->
+    <hr class="form-divider">
+    <div class="form-section-header">
+      <div class="form-section-icon">📋</div>
+      <div>
+        <div class="form-section-label">Program Details</div>
+        <div class="form-section-note">Tell us about the apprenticeship you're offering.</div>
+      </div>
+    </div>
+    <div class="form-body" style="padding-top:0">
+      <div class="form-grid">
+        <div class="fg full"><label>Program Title <span class="req">*</span></label><input type="text" id="prog-title" placeholder="e.g. Landscape Operations Apprentice, Junior Bookkeeping Assistant..."/></div>
+        <div class="fg full"><label>Program Description <span class="req">*</span></label><textarea id="prog-desc" placeholder="Describe the role — what will the apprentice do day-to-day? What skills will they develop? What does a typical week look like?" style="min-height:110px"></textarea></div>
+        <div class="fg"><label>Number of Available Spots <span class="req">*</span></label>
+          <select id="prog-spots">
+            <option value="">Select...</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6–10</option><option>10+</option>
+          </select>
+        </div>
+        <div class="fg"><label>Program Duration <span class="req">*</span></label>
+          <select id="prog-duration">
+            <option value="">Select...</option>
+            <option>4 weeks</option><option>6 weeks</option><option>8 weeks</option>
+            <option>3 months</option><option>6 months</option><option>1 year</option>
+            <option>Ongoing / open-ended</option><option>Custom (describe below)</option>
+          </select>
+        </div>
+        <div class="fg full" id="custom-duration-wrap" style="display:none"><label>Custom Duration — describe</label><input type="text" id="custom-duration" placeholder="e.g. 10 weeks with option to extend..."/></div>
+        <div class="fg"><label>Schedule / Time Commitment <span class="req">*</span></label>
+          <select id="prog-schedule">
+            <option value="">Select...</option>
+            <option>Full-time (40 hrs/week)</option>
+            <option>Part-time (20–30 hrs/week)</option>
+            <option>Part-time (under 20 hrs/week)</option>
+            <option>Flexible / remote-friendly</option>
+            <option>Evenings & weekends only</option>
+            <option>Custom (describe below)</option>
+          </select>
+        </div>
+        <div class="fg"><label>Work Location <span class="req">*</span></label>
+          <select id="prog-location">
+            <option value="">Select...</option>
+            <option>On-site (at your location)</option>
+            <option>Remote</option>
+            <option>Hybrid (on-site + remote)</option>
+            <option>Field work / traveling</option>
+          </select>
+        </div>
+        <div class="fg full"><label>Skills or Qualifications You're Looking For</label><textarea id="prog-skills" placeholder="e.g. Basic computer skills, reliable transportation, interest in landscaping, customer service experience..."></textarea></div>
+      </div>
+    </div>
+
+    <!-- Section 4: Compensation -->
+    <hr class="form-divider">
+    <div class="form-section-header">
+      <div class="form-section-icon">💰</div>
+      <div>
+        <div class="form-section-label">Compensation</div>
+        <div class="form-section-note">Be clear about what your program offers financially.</div>
+      </div>
+    </div>
+    <div class="form-body" style="padding-top:0">
+      <div class="form-grid">
+        <div class="fg full">
+          <label>Compensation Type <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-opt gold-opt"><input type="radio" name="comp-type" value="Paid" onchange="handleCompType(this)"> 💵 Paid</label>
+            <label class="radio-opt"><input type="radio" name="comp-type" value="Stipend" onchange="handleCompType(this)"> 🎁 Stipend (fixed amount)</label>
+            <label class="radio-opt"><input type="radio" name="comp-type" value="Unpaid (experience/credit)" onchange="handleCompType(this)"> 🎓 Unpaid — for experience</label>
+            <label class="radio-opt"><input type="radio" name="comp-type" value="College credit" onchange="handleCompType(this)"> 🏫 College credit</label>
+          </div>
+        </div>
+
+        <!-- Paid Details (shown conditionally) -->
+        <div class="fg full" id="paid-details" style="display:none">
+          <label>Pay Rate <span class="req">*</span></label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <input type="text" id="pay-rate" placeholder="e.g. $15/hr, $600/week..." style="flex:2;min-width:180px"/>
+            <select id="pay-frequency" style="flex:1;min-width:130px">
+              <option>Per hour</option><option>Per week</option><option>Per month</option><option>Fixed total</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="fg full" id="stipend-details" style="display:none">
+          <label>Stipend Amount</label>
+          <input type="text" id="stipend-amount" placeholder="e.g. $500 total for the program duration..."/>
+        </div>
+
+        <div class="fg full"><label>Additional Benefits or Perks (optional)</label>
+          <textarea id="prog-perks" placeholder="e.g. Transportation reimbursement, meals, tools/equipment provided, certifications paid for, mentorship access..."></textarea>
+        </div>
+
+        <!-- Financial Commitment Statement (shown if Paid or Stipend) -->
+        <div class="fg full" id="commitment-wrap" style="display:none">
+          <div class="commitment-box">
+            <p><strong>Financial Commitment Statement</strong><br><br>
+            By submitting this program listing with a paid or stipend compensation type, you acknowledge and agree that:<br><br>
+            1. You commit to compensating the apprentice(s) at the agreed rate for the full duration of the program unless the program is formally ended in accordance with the terms agreed upon at placement.<br><br>
+            2. Failure to honor this financial commitment may result in removal of your program listing and ineligibility from future participation in SXY's Corporate Club Apprenticeship Program.<br><br>
+            3. SXY's Corporate Club serves as a community connector — compensation arrangements are entered into directly between you (the business) and the apprentice. SXY's Corporate Club is not a party to any employment agreement.</p>
+            <label class="commitment-check"><input type="checkbox" id="commitment-check"> I have read and agree to the Financial Commitment Statement above. I understand that by selecting a paid or stipend program, I am committing to compensate participating apprentices for the duration of the program.</label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 5: Industry-Specific Concerns -->
+    <hr class="form-divider">
+    <div class="form-section-header">
+      <div class="form-section-icon">⚠️</div>
+      <div>
+        <div class="form-section-label">Additional Program Information</div>
+        <div class="form-section-note">Industry-specific concerns, requirements, and disclosures.</div>
+      </div>
+    </div>
+    <div class="form-body" style="padding-top:0">
+      <div class="form-grid">
+        <div class="fg full">
+          <label>Physical or Safety Requirements</label>
+          <textarea id="safety-reqs" placeholder="e.g. Must be able to lift 50 lbs, work outdoors in all weather, wear PPE. Any licensing or safety certification requirements..."></textarea>
+        </div>
+        <div class="fg full">
+          <label>Background Check or Screening Requirements</label>
+          <div class="radio-group" style="margin-bottom:8px">
+            <label class="radio-opt"><input type="radio" name="bg-check" value="None required"> None required</label>
+            <label class="radio-opt"><input type="radio" name="bg-check" value="Background check required"> Background check required</label>
+            <label class="radio-opt"><input type="radio" name="bg-check" value="Drug screen required"> Drug screen required</label>
+            <label class="radio-opt"><input type="radio" name="bg-check" value="Both required"> Both required</label>
+          </div>
+        </div>
+        <div class="fg full">
+          <label>Licensing or Certification Requirements</label>
+          <textarea id="license-reqs" placeholder="e.g. Valid driver's license required, OSHA 10 preferred, cosmetology license in progress, food handler's card..."></textarea>
+        </div>
+        <div class="fg full">
+          <label>Insurance or Liability Considerations</label>
+          <textarea id="insurance-notes" placeholder="e.g. Apprentices will be covered under our general liability policy. Field workers may need to sign a safety waiver..."></textarea>
+        </div>
+        <div class="fg full">
+          <label>Non-Disclosure or Confidentiality Requirements</label>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="nda" value="No NDA required"> No NDA required</label>
+            <label class="radio-opt"><input type="radio" name="nda" value="NDA required at placement"> NDA required at placement</label>
+          </div>
+        </div>
+        <div class="fg full">
+          <label>Any Other Important Disclosures or Notes</label>
+          <textarea id="other-notes" placeholder="Anything else candidates or our team should know — client-facing role, travel requirements, physical environment, tools provided vs. required, etc..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6: Application Window -->
+    <hr class="form-divider">
+    <div class="form-section-header">
+      <div class="form-section-icon">📅</div>
+      <div>
+        <div class="form-section-label">Application Timeline</div>
+        <div class="form-section-note">Let us know when you'd like to accept applications.</div>
+      </div>
+    </div>
+    <div class="form-body" style="padding-top:0">
+      <div class="form-grid">
+        <div class="fg"><label>Desired Start Date</label><input type="date" id="start-date"/></div>
+        <div class="fg"><label>Application Deadline</label><input type="date" id="app-deadline"/></div>
+        <div class="fg full"><label>How urgently are you looking to fill this role?</label>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="urgency" value="ASAP"> 🔥 ASAP</label>
+            <label class="radio-opt"><input type="radio" name="urgency" value="Within 30 days"> Within 30 days</label>
+            <label class="radio-opt"><input type="radio" name="urgency" value="1–3 months"> 1–3 months</label>
+            <label class="radio-opt"><input type="radio" name="urgency" value="Flexible"> Flexible</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER / SUBMIT -->
+    <div class="form-footer">
+      <div id="form-error" style="display:none;background:rgba(255,80,80,0.1);border:1px solid rgba(255,80,80,0.3);border-radius:8px;padding:0.9rem 1.1rem;font-size:0.84rem;color:#ff8080;margin-bottom:1.2rem;line-height:1.55"></div>
+      <button class="submit-btn" onclick="submitForm()">Submit My Program for Review →</button>
+      <p class="submit-note">Your submission will be reviewed by our business strategists. We'll be in touch via email to confirm receipt, discuss pricing, and walk through the approval process. Submitting this form does not guarantee listing.</p>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div class="success-screen" id="success-screen">
+      <div class="s-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="s-h">Program Submitted!</div>
+      <p class="s-p">Thank you for your interest in SXY's Corporate Club Apprenticeship Program. Our team of business strategists will review your submission and reach out via email with next steps, including pricing and program approval details.</p>
+      <p class="s-note">SXY's Corporate Club · sxysinvestors.com</p>
+      <a href="apprenticeship.html" style="display:inline-block;margin-top:2rem;padding:0.7rem 1.8rem;background:rgba(13,122,140,0.15);border:1px solid rgba(13,122,140,0.4);border-radius:20px;color:var(--teal-light);font-size:0.84rem;text-decoration:none;transition:all .15s">← Back to Apprenticeship Program</a>
+    </div>
+
+  </div><!-- /form-card -->
+</div><!-- /form-wrap -->
+
+<script>
+// ── INDUSTRY CHIPS ──────────────────────────────────────────────────────────
+document.querySelectorAll('.ind-chip-label input').forEach(cb => {
+  cb.addEventListener('change', function() {
+    this.closest('.ind-chip-label').classList.toggle('selected', this.checked);
+    const otherWrap = document.getElementById('other-industry-wrap');
+    const anyOther = document.querySelector('.ind-chip-label input[value="Other"]:checked');
+    otherWrap.style.display = anyOther ? 'flex' : 'none';
+  });
+});
+
+// ── CONDITIONAL FIELDS ──────────────────────────────────────────────────────
+document.getElementById('prog-duration').addEventListener('change', function() {
+  document.getElementById('custom-duration-wrap').style.display = this.value === 'Custom (describe below)' ? 'flex' : 'none';
+});
+
+function handleCompType(radio) {
+  const paid = document.getElementById('paid-details');
+  const stipend = document.getElementById('stipend-details');
+  const commit = document.getElementById('commitment-wrap');
+  paid.style.display = radio.value === 'Paid' ? 'flex' : 'none';
+  stipend.style.display = radio.value === 'Stipend' ? 'flex' : 'none';
+  commit.style.display = (radio.value === 'Paid' || radio.value === 'Stipend') ? 'flex' : 'none';
+}
+
+// ── VALIDATION ──────────────────────────────────────────────────────────────
+function val(id) { return (document.getElementById(id) || {}).value?.trim() || ''; }
+function rad(name) { const r = document.querySelector(`input[name="${name}"]:checked`); return r ? r.value : ''; }
+function chks(name) { return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(c=>c.value).join(', '); }
+
+function showError(msg) {
+  const el = document.getElementById('form-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+  el.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// ── SUBMIT ──────────────────────────────────────────────────────────────────
+async function submitForm() {
+  document.getElementById('form-error').style.display = 'none';
+
+  const required = [
+    [val('biz-name'), 'Business name is required.'],
+    [val('poc-name'), 'Point of contact name is required.'],
+    [val('poc-email'), 'Contact email is required.'],
+    [val('poc-phone'), 'Contact phone is required.'],
+    [val('biz-zip'), 'Location / zip code is required.'],
+    [val('biz-desc'), 'A business description is required.'],
+    [chks('industry'), 'Please select at least one industry.'],
+    [val('prog-title'), 'Program title is required.'],
+    [val('prog-desc'), 'Program description is required.'],
+    [val('prog-spots'), 'Please select the number of available spots.'],
+    [val('prog-duration'), 'Please select program duration.'],
+    [val('prog-schedule'), 'Please select a schedule / time commitment.'],
+    [val('prog-location'), 'Please select a work location type.'],
+    [rad('comp-type'), 'Please select a compensation type.'],
+  ];
+
+  for (const [v, msg] of required) {
+    if (!v) { showError(msg); return; }
+  }
+
+  // Validate commitment checkbox for paid/stipend programs
+  const compType = rad('comp-type');
+  if ((compType === 'Paid' || compType === 'Stipend') && !document.getElementById('commitment-check').checked) {
+    showError('You must acknowledge the Financial Commitment Statement for paid or stipend programs.');
+    return;
+  }
+
+  const industries = chks('industry');
+  const payload = {
+    type: 'Business Program Submission',
+    bizName: val('biz-name'),
+    pocName: val('poc-name'),
+    pocEmail: val('poc-email'),
+    pocPhone: val('poc-phone'),
+    bizWebsite: val('biz-website'),
+    bizLocation: val('biz-zip'),
+    bizDescription: val('biz-desc'),
+    industries: industries + (val('other-industry') ? ' / ' + val('other-industry') : ''),
+    programTitle: val('prog-title'),
+    programDescription: val('prog-desc'),
+    openSpots: val('prog-spots'),
+    duration: val('prog-duration') === 'Custom (describe below)' ? val('custom-duration') : val('prog-duration'),
+    schedule: val('prog-schedule'),
+    workLocation: val('prog-location'),
+    skillsRequired: val('prog-skills'),
+    compensationType: compType,
+    payRate: val('pay-rate') + (val('pay-rate') ? ' ' + val('pay-frequency') : ''),
+    stipendAmount: val('stipend-amount'),
+    perks: val('prog-perks'),
+    financialCommitmentSigned: (compType === 'Paid' || compType === 'Stipend') ? 'YES — acknowledged' : 'N/A',
+    physicalRequirements: val('safety-reqs'),
+    backgroundCheck: rad('bg-check'),
+    licensingRequirements: val('license-reqs'),
+    insuranceNotes: val('insurance-notes'),
+    ndaRequired: rad('nda'),
+    otherNotes: val('other-notes'),
+    desiredStartDate: val('start-date'),
+    applicationDeadline: val('app-deadline'),
+    urgency: rad('urgency'),
+    submittedAt: new Date().toLocaleString(),
+    addedBy: 'Business Submission Form (Website)',
+    status: 'pending_review'
+  };
+
+  // Disable submit button
+  const btn = document.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+
+  // Google Sheets JSONP
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxzazWlTgNPpXpwLLMSIwSoHvb0aBNakLIaN-qmpqCZJfEMQwoomxQfmr6Uptji1JdI/exec';
+  const cbName = 'cb_' + Date.now();
+  window[cbName] = function() { delete window[cbName]; };
+  const params = Object.keys(payload).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(payload[k])).join('&');
+  const script = document.createElement('script');
+  script.src = SHEET_URL + '?' + params + '&callback=' + cbName + '&sheet=BusinessPrograms';
+  document.head.appendChild(script);
+  setTimeout(() => { if (script.parentNode) script.parentNode.removeChild(script); }, 10000);
+
+  // API Notify
+  try {
+    await fetch('https://www.sxyscorporateclub.com/api/public/intake', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        full_name: payload.pocName,
+        email: payload.pocEmail,
+        phone: payload.pocPhone,
+        business_name: payload.bizName,
+        service_interest: 'Apprenticeship Program — Business Listing',
+        message: `BUSINESS PROGRAM SUBMISSION\n\nProgram: ${payload.programTitle}\nIndustry: ${payload.industries}\nSpots: ${payload.openSpots}\nDuration: ${payload.duration}\nCompensation: ${payload.compensationType}${payload.payRate ? ' — ' + payload.payRate : ''}\n\nDescription:\n${payload.programDescription}\n\nStart Date: ${payload.desiredStartDate}\nDeadline: ${payload.applicationDeadline}\nUrgency: ${payload.urgency}`,
+        preferred_contact: 'Email',
+        source: 'business-program',
+        notify_emails: ['admin@sxysinvestors.com']
+      })
+    });
+  } catch(e) { console.warn('API error:', e); }
+
+  // Show success
+  setTimeout(() => {
+    document.getElementById('form-card').querySelector('.form-header').style.display = 'none';
+    document.querySelectorAll('.form-body,.form-divider,.form-section-header,.form-footer').forEach(el => el.style.display = 'none');
+    const s = document.getElementById('success-screen');
+    s.style.display = 'block';
+    setTimeout(() => s.classList.add('visible'), 10);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }, 1200);
+}
+</script>
+</body>
+</html>
