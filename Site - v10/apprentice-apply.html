@@ -196,7 +196,7 @@ textarea.inp{resize:vertical;min-height:80px}
         if (months < REQUIRED_MONTHS) {
           // Show special "not yet eligible" message
           document.querySelector('.gate-h').textContent = 'Almost There, ' + (member.auth?.email?.split('@')[0] || 'Member') + '!';
-          document.querySelector('.gate-p').textContent = 'You're a VIP member — great! Apprenticeship eligibility unlocks at 6 months of VIP membership. You're ' + months + ' month' + (months === 1 ? '' : 's') + ' in. Check back when you've hit 6 months!';
+          document.querySelector('.gate-p').textContent = 'You\'re a VIP member \u2014 great! Apprenticeship eligibility unlocks at 6 months of VIP membership. You\'re ' + months + ' month' + (months === 1 ? '' : 's') + ' in. Check back when you\'ve hit 6 months!';
           document.querySelector('.gate-icon').textContent = '⏳';
           showGate();
           return;
@@ -276,7 +276,7 @@ textarea.inp{resize:vertical;min-height:80px}
 
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────────────────
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxzazWlTgNPpXpwLLMSIwSoHvb0aBNakLIaN-qmpqCZJfEMQwoomxQfmr6Uptji1JdI/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyK9FwFRM2a_xncznCcEVUeLbU65h7ZchSYaFtU4n4GNUGN263dC3WB1T91fAOWSWME/exec';
 const NOTIFY_EMAIL = 'admin@sxysinvestors.com';
 
 let answers = {};
