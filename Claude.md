@@ -7,7 +7,7 @@
 ## Critical Business Rules
 
 - **Club Directory fee:** 3% per COMPLETED SALE only. Never at listing. VIP rate: 2%.
-- **Apprenticeship eligibility:** VIP members in good standing for 6+ consecutive months only.
+- **Apprenticeship eligibility:** Pro Monthly or Annual members in good standing for 6+ consecutive months only.
 - **Membership tiers:** Free ($0), Monthly ($5/mo), Annual ($49/yr), VIP ($29/mo).
 - **Retainer price:** $300/month — Account Management and Strategic Programming types only.
 - **AI assistants:** Janay = financial education + resource connections. Sasha = member onboarding. Do not conflate.
