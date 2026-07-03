@@ -36,19 +36,14 @@ a private community built for business owners who are serious about growth.
 
 Here's what membership looks like:
 
-FREE — $0/month
-   Get started with access to our community and basic resources.
+Newbie (Free) $0 
+Access to Economic Bites + Club Directory (add your business page and sell your products/services) + Club Hub (read and post in the community exchange. Certain webinars are limited to paid members).
 
-MONTHLY — $5/month
-   Full community access, member resources, and event invites.
+Pro Monthly $5/month or Annually $49/year 
+Access to all Newbie Tier features + Club Market (bidding portal) + Apprenticeship Program Opportunities + Host webinars
 
-ANNUAL — $49/year
-   Everything in Monthly, billed annually (best value).
-
-VIP — $29/month
-   Priority access, exclusive programming, retainer eligibility,
-   and a reduced ${rules.TRANSACTION_FEE.VIP * 100}% platform fee on all transactions.
-   (VIP members in good standing for 6+ months become eligible for our Apprenticeship program.)
+VIP $29/month 
+Access to all Pro features + Monthly live group coaching calls with a Club Specialist + Priority Q&A + Early access to new releases + Host private webinars
 
 Membership is free to start — no credit card required.
 
