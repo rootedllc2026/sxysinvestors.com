@@ -121,7 +121,7 @@ async function run(payload, sharedState) {
   const response = await fetch(LOVEABLE_ENDPOINT, {
     method:  'POST',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      'Authorization': `Bearer ${S7LUvYpHyXSG6EKZgN3xnvpvXuGkz6V2sX5xPR3v}`,
       'Content-Type':  'application/json',
     },
     body: JSON.stringify(body),
