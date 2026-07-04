@@ -1,138 +1,172 @@
-// Agent: Weekly Summary
-// Job: Compiles a weekly financial summary from both sites and posts it to the
-// Back Office Hub (Loveable) so you can see everything in one place every week.
-// Triggered by a Zapier scheduled trigger every Monday morning.
-// Requires LOVEABLE_AGENT_TOKEN environment variable (your AGENT_UPDATES_TOKEN from Loveable).
+var LOVEABLE_TOKEN    = 'S7LUvYpHyXSG6EKZgN3xnvpvXuGkz6V2sX5xPR3vE';
+var LOVEABLE_ENDPOINT = 'https://preview--hubble-blossom-connect.lovable.app/api/public/agent-updates';
 
-const rules = require('../config/business-rules');
+function sendWeeklySummary() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
 
-const LOVEABLE_ENDPOINT = 'https://preview--hubble-blossom-connect.lovable.app/api/public/agent-updates';
+  var today     = new Date();
+  var weekStart = new Date(today);
+  weekStart.setDate(today.getDate() - 7);
 
-async function run(payload, sharedState) {
-  const {
-    periodStart,
-    periodEnd,
-    transactions   = [],
-    bookings       = [],
-    boutiqueOrders = [],
-    members        = [],
-    retainers      = [],
-    agentToken,
-  } = payload;
+  var fmt      = Utilities.formatDate;
+  var tz       = ss.getSpreadsheetTimeZone();
+  var startStr = fmt(weekStart, tz, 'yyyy-MM-dd');
+  var endStr   = fmt(today,     tz, 'yyyy-MM-dd');
 
-  const completedTxns = transactions.filter(t =>
-    (t['Payment Status'] || '').toLowerCase() === 'completed'
-  );
+  var transactions   = getSheetData(ss, 'Transactions');
+  var bookings       = getSheetData(ss, 'Bookings');
+  var boutiqueOrders = getSheetData(ss, 'Boutique Orders');
+  var members        = getSheetData(ss, 'Members');
+  var retainers      = getSheetData(ss, 'Retainers');
 
-  const clubRevenue = completedTxns
-    .filter(t => t['Source Site'] === rules.SITES.MEMBER_PORTAL)
-    .reduce((sum, t) => sum + parseFloat(t['Sale Amount'] || 0), 0);
+  var completedTxns = transactions.filter(function(t) {
+    return t['Payment Status'] === 'completed' &&
+           t['Date'] >= startStr && t['Date'] <= endStr;
+  });
 
-  const publicRevenue = completedTxns
-    .filter(t => t['Source Site'] === rules.SITES.PUBLIC_SITE)
-    .reduce((sum, t) => sum + parseFloat(t['Sale Amount'] || 0), 0);
+  var clubRevenue   = sumField(completedTxns.filter(function(t) {
+    return t['Source Site'] === 'sxyscorporateclub.com';
+  }), 'Sale Amount');
 
-  const totalRevenue = clubRevenue + publicRevenue;
+  var publicRevenue = sumField(completedTxns.filter(function(t) {
+    return t['Source Site'] === 'sxysinvestors.com';
+  }), 'Sale Amount');
 
-  const totalFees = completedTxns
-    .reduce((sum, t) => sum + parseFloat(t['Platform Fee'] || 0), 0);
+  var totalRevenue  = clubRevenue + publicRevenue;
+  var totalFees     = sumField(completedTxns, 'Platform Fee');
 
-  const boutiqueRevenue = boutiqueOrders
-    .reduce((sum, o) => sum + parseFloat(o['Order Total'] || 0), 0);
+  var weekOrders  = boutiqueOrders.filter(function(o) {
+    return o['Order Date'] >= startStr && o['Order Date'] <= endStr;
+  });
+  var boutiqueRev = sumField(weekOrders, 'Order Total');
 
-  const activeRetainers = retainers.filter(r =>
-    (r['Status'] || '').toLowerCase() === 'active'
-  );
-  const mrr = activeRetainers.length * rules.RETAINER.PRICE;
+  var activeRetainers = retainers.filter(function(r) {
+    return (r['Status'] || '').toLowerCase() === 'active';
+  });
+  var mrr = activeRetainers.length * 300;
 
-  const activeMembers = members.filter(m =>
-    (m['Status'] || '').toLowerCase() === 'active'
-  ).length;
+  var activeMembers = members.filter(function(m) {
+    return (m['Status'] || '').toLowerCase() === 'active';
+  }).length;
 
-  const vipMembers = members.filter(m =>
-    (m['Membership Tier'] || '').toUpperCase() === 'VIP' &&
-    (m['Status'] || '').toLowerCase() === 'active'
-  ).length;
+  var vipMembers = members.filter(function(m) {
+    return (m['Membership Tier'] || '').toUpperCase() === 'VIP' &&
+           (m['Status'] || '').toLowerCase() === 'active';
+  }).length;
 
-  const newMembers = members.filter(m =>
-    m['Join Date'] >= periodStart && m['Join Date'] <= periodEnd
-  ).length;
+  var newMembers = members.filter(function(m) {
+    return m['Join Date'] >= startStr && m['Join Date'] <= endStr;
+  }).length;
 
-  const totalBookings = bookings.length;
-  const convertedBookings = bookings.filter(b =>
-    (b['Converted to Member'] || '').toString().toUpperCase() === 'TRUE'
-  ).length;
+  var weekBookings = bookings.filter(function(b) {
+    return b['Booking Date'] >= startStr && b['Booking Date'] <= endStr;
+  });
+  var converted = weekBookings.filter(function(b) {
+    return (b['Converted to Member'] || '').toString().toUpperCase() === 'TRUE';
+  }).length;
 
-  const fmt = n => `$${parseFloat(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
-
-  const summary = [
-    `WEEKLY FINANCIAL SUMMARY — ${periodStart} to ${periodEnd}`,
-    ``,
-    `REVENUE`,
-    `  Total: ${fmt(totalRevenue)}`,
-    `  ${rules.SITES.MEMBER_PORTAL}: ${fmt(clubRevenue)}`,
-    `  ${rules.SITES.PUBLIC_SITE}: ${fmt(publicRevenue)}`,
-    `  Platform fees collected: ${fmt(totalFees)}`,
-    ``,
-    `BOUTIQUE`,
-    `  Orders: ${boutiqueOrders.length}`,
-    `  Revenue: ${fmt(boutiqueRevenue)}`,
-    ``,
-    `STRATEGY SESSIONS`,
-    `  Booked: ${totalBookings}`,
-    `  Converted to members: ${convertedBookings}`,
-    ``,
-    `MEMBERS`,
-    `  Active: ${activeMembers}`,
-    `  New this week: ${newMembers}`,
-    `  VIP: ${vipMembers}`,
-    ``,
-    `RETAINERS`,
-    `  Active: ${activeRetainers.length}`,
-    `  MRR: ${fmt(mrr)}`,
+  var summary = [
+    'WEEKLY FINANCIAL SUMMARY — ' + startStr + ' to ' + endStr,
+    '',
+    'REVENUE',
+    '  Total: ' + money(totalRevenue),
+    '  sxyscorporateclub.com: ' + money(clubRevenue),
+    '  sxysinvestors.com: '     + money(publicRevenue),
+    '  Platform fees collected: ' + money(totalFees),
+    '',
+    'BOUTIQUE',
+    '  Orders: ' + weekOrders.length,
+    '  Revenue: ' + money(boutiqueRev),
+    '',
+    'STRATEGY SESSIONS',
+    '  Booked: ' + weekBookings.length,
+    '  Converted to members: ' + converted,
+    '',
+    'MEMBERS',
+    '  Active: ' + activeMembers,
+    '  New this week: ' + newMembers,
+    '  VIP: ' + vipMembers,
+    '',
+    'RETAINERS',
+    '  Active: ' + activeRetainers.length,
+    '  MRR: ' + money(mrr),
   ].join('\n');
 
-  const token = agentToken || process.env.LOVEABLE_AGENT_TOKEN;
-
-  if (!token) {
-    return { success: false, error: 'Missing LOVEABLE_AGENT_TOKEN.' };
-  }
-
-  const body = {
-    title:        `Week of ${periodStart} — Financial Summary`,
+  var payload = {
+    title:        'Week of ' + startStr + ' — Financial Summary',
     summary:      summary,
-    period_start: periodStart,
-    period_end:   periodEnd,
+    period_start: startStr,
+    period_end:   endStr,
     metrics: {
-      revenue:          parseFloat(totalRevenue.toFixed(2)),
-      boutique_revenue: parseFloat(boutiqueRevenue.toFixed(2)),
-      platform_fees:    parseFloat(totalFees.toFixed(2)),
+      revenue:          round(totalRevenue),
+      boutique_revenue: round(boutiqueRev),
+      platform_fees:    round(totalFees),
       mrr:              mrr,
       active_members:   activeMembers,
       new_members:      newMembers,
       vip_members:      vipMembers,
-      bookings:         totalBookings,
-      conversions:      convertedBookings,
+      bookings:         weekBookings.length,
+      conversions:      converted,
       active_retainers: activeRetainers.length,
     },
     source: 'claude-agent',
   };
 
-  const response = await fetch(LOVEABLE_ENDPOINT, {
-    method:  'POST',
-    headers: {
-      'Authorization': `Bearer ${S7LUvYpHyXSG6EKZgN3xnvpvXuGkz6V2sX5xPR3v}`,
-      'Content-Type':  'application/json',
-    },
-    body: JSON.stringify(body),
-  });
+  var options = {
+    method:      'post',
+    contentType: 'application/json',
+    headers:     { 'Authorization': 'Bearer ' + LOVEABLE_TOKEN },
+    payload:     JSON.stringify(payload),
+    muteHttpExceptions: true,
+  };
 
-  if (!response.ok) {
-    const text = await response.text();
-    return { success: false, error: `Loveable API error ${response.status}: ${text}` };
+  var response = UrlFetchApp.fetch(LOVEABLE_ENDPOINT, options);
+  var code     = response.getResponseCode();
+
+  if (code === 200 || code === 201) {
+    Logger.log('Weekly summary posted successfully.');
+  } else {
+    Logger.log('Error: ' + code + ' — ' + response.getContentText());
   }
-
-  return { success: true, summary, metrics: body.metrics };
 }
 
-module.exports = { run };
+function setWeeklyTrigger() {
+  ScriptApp.getProjectTriggers().forEach(function(t) {
+    if (t.getHandlerFunction() === 'sendWeeklySummary') {
+      ScriptApp.deleteTrigger(t);
+    }
+  });
+  ScriptApp.newTrigger('sendWeeklySummary')
+    .timeBased()
+    .onWeekDay(ScriptApp.WeekDay.MONDAY)
+    .atHour(8)
+    .create();
+  Logger.log('Weekly trigger set. Summary will post every Monday at 8am.');
+}
+
+function getSheetData(ss, sheetName) {
+  var sheet = ss.getSheetByName(sheetName);
+  if (!sheet) return [];
+  var data  = sheet.getDataRange().getValues();
+  if (data.length < 2) return [];
+  var headers = data[0];
+  return data.slice(1).map(function(row) {
+    var obj = {};
+    headers.forEach(function(h, i) { obj[h] = row[i] !== undefined ? String(row[i]) : ''; });
+    return obj;
+  });
+}
+
+function sumField(rows, field) {
+  return rows.reduce(function(sum, row) {
+    return sum + (parseFloat(row[field]) || 0);
+  }, 0);
+}
+
+function money(n) {
+  return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function round(n) {
+  return Math.round(n * 100) / 100;
+}
